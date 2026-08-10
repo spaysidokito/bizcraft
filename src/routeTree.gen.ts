@@ -17,6 +17,10 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBadgesRouteImport } from './routes/admin.badges'
+import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminStoriesRouteImport } from './routes/admin.stories'
 import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
 import { Route as ChallengesStoryIdRouteImport } from './routes/challenges.$storyId'
@@ -64,6 +68,26 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminBadgesRoute = AdminBadgesRouteImport.update({
+  id: '/admin/badges',
+  path: '/admin/badges',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
+  id: '/admin/questions',
+  path: '/admin/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStoriesRoute = AdminStoriesRouteImport.update({
+  id: '/admin/stories',
+  path: '/admin/stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminStudentsRoute = AdminStudentsRouteImport.update({
   id: '/admin/students',
   path: '/admin/students',
@@ -103,6 +127,10 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/badges': typeof AdminBadgesRoute
+  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/stories': typeof AdminStoriesRoute
   '/admin/students': typeof AdminStudentsRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
@@ -119,6 +147,10 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/badges': typeof AdminBadgesRoute
+  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/stories': typeof AdminStoriesRoute
   '/admin/students': typeof AdminStudentsRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
@@ -136,6 +168,10 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/badges': typeof AdminBadgesRoute
+  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/stories': typeof AdminStoriesRoute
   '/admin/students': typeof AdminStudentsRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
@@ -154,6 +190,10 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/badges'
+    | '/admin/questions'
+    | '/admin/reports'
+    | '/admin/stories'
     | '/admin/students'
     | '/challenges/$storyId'
     | '/results/$storyId'
@@ -170,6 +210,10 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/badges'
+    | '/admin/questions'
+    | '/admin/reports'
+    | '/admin/stories'
     | '/admin/students'
     | '/challenges/$storyId'
     | '/results/$storyId'
@@ -186,6 +230,10 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/badges'
+    | '/admin/questions'
+    | '/admin/reports'
+    | '/admin/stories'
     | '/admin/students'
     | '/challenges/$storyId'
     | '/results/$storyId'
@@ -203,6 +251,10 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  AdminBadgesRoute: typeof AdminBadgesRoute
+  AdminQuestionsRoute: typeof AdminQuestionsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminStoriesRoute: typeof AdminStoriesRoute
   AdminStudentsRoute: typeof AdminStudentsRoute
   ChallengesStoryIdRoute: typeof ChallengesStoryIdRoute
   ResultsStoryIdRoute: typeof ResultsStoryIdRoute
@@ -270,6 +322,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/badges': {
+      id: '/admin/badges'
+      path: '/admin/badges'
+      fullPath: '/admin/badges'
+      preLoaderRoute: typeof AdminBadgesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/questions': {
+      id: '/admin/questions'
+      path: '/admin/questions'
+      fullPath: '/admin/questions'
+      preLoaderRoute: typeof AdminQuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/stories': {
+      id: '/admin/stories'
+      path: '/admin/stories'
+      fullPath: '/admin/stories'
+      preLoaderRoute: typeof AdminStoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/students': {
       id: '/admin/students'
       path: '/admin/students'
@@ -323,6 +403,10 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  AdminBadgesRoute: AdminBadgesRoute,
+  AdminQuestionsRoute: AdminQuestionsRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminStoriesRoute: AdminStoriesRoute,
   AdminStudentsRoute: AdminStudentsRoute,
   ChallengesStoryIdRoute: ChallengesStoryIdRoute,
   ResultsStoryIdRoute: ResultsStoryIdRoute,
