@@ -16,6 +16,8 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
 import { Route as ChallengesStoryIdRouteImport } from './routes/challenges.$storyId'
 import { Route as ResultsStoryIdRouteImport } from './routes/results.$storyId'
@@ -57,6 +59,16 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStudentsRoute = AdminStudentsRouteImport.update({
+  id: '/admin/students',
+  path: '/admin/students',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChallengesIndexRoute = ChallengesIndexRouteImport.update({
   id: '/challenges/',
   path: '/challenges/',
@@ -91,9 +103,11 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/students': typeof AdminStudentsRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
   '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/stories/': typeof StoriesIndexRoute
 }
@@ -105,9 +119,11 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/students': typeof AdminStudentsRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
   '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/admin': typeof AdminIndexRoute
   '/challenges': typeof ChallengesIndexRoute
   '/stories': typeof StoriesIndexRoute
 }
@@ -120,9 +136,11 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/students': typeof AdminStudentsRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
   '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/stories/': typeof StoriesIndexRoute
 }
@@ -136,9 +154,11 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/students'
     | '/challenges/$storyId'
     | '/results/$storyId'
     | '/stories/$storyId'
+    | '/admin/'
     | '/challenges/'
     | '/stories/'
   fileRoutesByTo: FileRoutesByTo
@@ -150,9 +170,11 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/students'
     | '/challenges/$storyId'
     | '/results/$storyId'
     | '/stories/$storyId'
+    | '/admin'
     | '/challenges'
     | '/stories'
   id:
@@ -164,9 +186,11 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/students'
     | '/challenges/$storyId'
     | '/results/$storyId'
     | '/stories/$storyId'
+    | '/admin/'
     | '/challenges/'
     | '/stories/'
   fileRoutesById: FileRoutesById
@@ -179,9 +203,11 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  AdminStudentsRoute: typeof AdminStudentsRoute
   ChallengesStoryIdRoute: typeof ChallengesStoryIdRoute
   ResultsStoryIdRoute: typeof ResultsStoryIdRoute
   StoriesStoryIdRoute: typeof StoriesStoryIdRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   ChallengesIndexRoute: typeof ChallengesIndexRoute
   StoriesIndexRoute: typeof StoriesIndexRoute
 }
@@ -237,6 +263,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/students': {
+      id: '/admin/students'
+      path: '/admin/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof AdminStudentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/challenges/': {
       id: '/challenges/'
       path: '/challenges'
@@ -283,22 +323,14 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  AdminStudentsRoute: AdminStudentsRoute,
   ChallengesStoryIdRoute: ChallengesStoryIdRoute,
   ResultsStoryIdRoute: ResultsStoryIdRoute,
   StoriesStoryIdRoute: StoriesStoryIdRoute,
+  AdminIndexRoute: AdminIndexRoute,
   ChallengesIndexRoute: ChallengesIndexRoute,
   StoriesIndexRoute: StoriesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
