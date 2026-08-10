@@ -10,33 +10,258 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AchievementsRouteImport } from './routes/achievements'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBadgesRouteImport } from './routes/admin.badges'
+import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminStoriesRouteImport } from './routes/admin.stories'
+import { Route as AdminStudentsRouteImport } from './routes/admin.students'
+import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
+import { Route as ChallengesStoryIdRouteImport } from './routes/challenges.$storyId'
+import { Route as ResultsStoryIdRouteImport } from './routes/results.$storyId'
+import { Route as StoriesIndexRouteImport } from './routes/stories.index'
+import { Route as StoriesStoryIdRouteImport } from './routes/stories.$storyId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AchievementsRoute = AchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBadgesRoute = AdminBadgesRouteImport.update({
+  id: '/admin/badges',
+  path: '/admin/badges',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
+  id: '/admin/questions',
+  path: '/admin/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStoriesRoute = AdminStoriesRouteImport.update({
+  id: '/admin/stories',
+  path: '/admin/stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStudentsRoute = AdminStudentsRouteImport.update({
+  id: '/admin/students',
+  path: '/admin/students',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChallengesIndexRoute = ChallengesIndexRouteImport.update({
+  id: '/challenges/',
+  path: '/challenges/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChallengesStoryIdRoute = ChallengesStoryIdRouteImport.update({
+  id: '/challenges/$storyId',
+  path: '/challenges/$storyId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultsStoryIdRoute = ResultsStoryIdRouteImport.update({
+  id: '/results/$storyId',
+  path: '/results/$storyId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoriesIndexRoute = StoriesIndexRouteImport.update({
+  id: '/stories/',
+  path: '/stories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoriesStoryIdRoute = StoriesStoryIdRouteImport.update({
+  id: '/stories/$storyId',
+  path: '/stories/$storyId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/admin/badges': typeof AdminBadgesRoute
+  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/stories': typeof AdminStoriesRoute
+  '/admin/students': typeof AdminStudentsRoute
+  '/challenges/$storyId': typeof ChallengesStoryIdRoute
+  '/results/$storyId': typeof ResultsStoryIdRoute
+  '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/challenges/': typeof ChallengesIndexRoute
+  '/stories/': typeof StoriesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/admin/badges': typeof AdminBadgesRoute
+  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/stories': typeof AdminStoriesRoute
+  '/admin/students': typeof AdminStudentsRoute
+  '/challenges/$storyId': typeof ChallengesStoryIdRoute
+  '/results/$storyId': typeof ResultsStoryIdRoute
+  '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/challenges': typeof ChallengesIndexRoute
+  '/stories': typeof StoriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/admin/badges': typeof AdminBadgesRoute
+  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/stories': typeof AdminStoriesRoute
+  '/admin/students': typeof AdminStudentsRoute
+  '/challenges/$storyId': typeof ChallengesStoryIdRoute
+  '/results/$storyId': typeof ResultsStoryIdRoute
+  '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/challenges/': typeof ChallengesIndexRoute
+  '/stories/': typeof StoriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/achievements'
+    | '/admin-login'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/profile'
+    | '/register'
+    | '/admin/badges'
+    | '/admin/questions'
+    | '/admin/reports'
+    | '/admin/stories'
+    | '/admin/students'
+    | '/challenges/$storyId'
+    | '/results/$storyId'
+    | '/stories/$storyId'
+    | '/admin/'
+    | '/challenges/'
+    | '/stories/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/achievements'
+    | '/admin-login'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/profile'
+    | '/register'
+    | '/admin/badges'
+    | '/admin/questions'
+    | '/admin/reports'
+    | '/admin/stories'
+    | '/admin/students'
+    | '/challenges/$storyId'
+    | '/results/$storyId'
+    | '/stories/$storyId'
+    | '/admin'
+    | '/challenges'
+    | '/stories'
+  id:
+    | '__root__'
+    | '/'
+    | '/achievements'
+    | '/admin-login'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/profile'
+    | '/register'
+    | '/admin/badges'
+    | '/admin/questions'
+    | '/admin/reports'
+    | '/admin/stories'
+    | '/admin/students'
+    | '/challenges/$storyId'
+    | '/results/$storyId'
+    | '/stories/$storyId'
+    | '/admin/'
+    | '/challenges/'
+    | '/stories/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AchievementsRoute: typeof AchievementsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  DashboardRoute: typeof DashboardRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
+  AdminBadgesRoute: typeof AdminBadgesRoute
+  AdminQuestionsRoute: typeof AdminQuestionsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminStoriesRoute: typeof AdminStoriesRoute
+  AdminStudentsRoute: typeof AdminStudentsRoute
+  ChallengesStoryIdRoute: typeof ChallengesStoryIdRoute
+  ResultsStoryIdRoute: typeof ResultsStoryIdRoute
+  StoriesStoryIdRoute: typeof StoriesStoryIdRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  ChallengesIndexRoute: typeof ChallengesIndexRoute
+  StoriesIndexRoute: typeof StoriesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +273,148 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/achievements': {
+      id: '/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AchievementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/badges': {
+      id: '/admin/badges'
+      path: '/admin/badges'
+      fullPath: '/admin/badges'
+      preLoaderRoute: typeof AdminBadgesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/questions': {
+      id: '/admin/questions'
+      path: '/admin/questions'
+      fullPath: '/admin/questions'
+      preLoaderRoute: typeof AdminQuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/stories': {
+      id: '/admin/stories'
+      path: '/admin/stories'
+      fullPath: '/admin/stories'
+      preLoaderRoute: typeof AdminStoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/students': {
+      id: '/admin/students'
+      path: '/admin/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof AdminStudentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/': {
+      id: '/challenges/'
+      path: '/challenges'
+      fullPath: '/challenges/'
+      preLoaderRoute: typeof ChallengesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$storyId': {
+      id: '/challenges/$storyId'
+      path: '/challenges/$storyId'
+      fullPath: '/challenges/$storyId'
+      preLoaderRoute: typeof ChallengesStoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/results/$storyId': {
+      id: '/results/$storyId'
+      path: '/results/$storyId'
+      fullPath: '/results/$storyId'
+      preLoaderRoute: typeof ResultsStoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stories/': {
+      id: '/stories/'
+      path: '/stories'
+      fullPath: '/stories/'
+      preLoaderRoute: typeof StoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stories/$storyId': {
+      id: '/stories/$storyId'
+      path: '/stories/$storyId'
+      fullPath: '/stories/$storyId'
+      preLoaderRoute: typeof StoriesStoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AchievementsRoute: AchievementsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  DashboardRoute: DashboardRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
+  AdminBadgesRoute: AdminBadgesRoute,
+  AdminQuestionsRoute: AdminQuestionsRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminStoriesRoute: AdminStoriesRoute,
+  AdminStudentsRoute: AdminStudentsRoute,
+  ChallengesStoryIdRoute: ChallengesStoryIdRoute,
+  ResultsStoryIdRoute: ResultsStoryIdRoute,
+  StoriesStoryIdRoute: StoriesStoryIdRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  ChallengesIndexRoute: ChallengesIndexRoute,
+  StoriesIndexRoute: StoriesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
