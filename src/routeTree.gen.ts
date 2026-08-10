@@ -10,9 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AchievementsRouteImport } from './routes/achievements'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
 import { Route as ChallengesStoryIdRouteImport } from './routes/challenges.$storyId'
@@ -23,6 +25,11 @@ import { Route as StoriesStoryIdRouteImport } from './routes/stories.$storyId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AchievementsRoute = AchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -38,6 +45,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -73,9 +85,11 @@ const StoriesStoryIdRoute = StoriesStoryIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
   '/admin-login': typeof AdminLoginRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
@@ -85,9 +99,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
   '/admin-login': typeof AdminLoginRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
@@ -98,9 +114,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
   '/admin-login': typeof AdminLoginRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/challenges/$storyId': typeof ChallengesStoryIdRoute
   '/results/$storyId': typeof ResultsStoryIdRoute
@@ -112,9 +130,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/achievements'
     | '/admin-login'
     | '/dashboard'
     | '/forgot-password'
+    | '/profile'
     | '/register'
     | '/challenges/$storyId'
     | '/results/$storyId'
@@ -124,9 +144,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/achievements'
     | '/admin-login'
     | '/dashboard'
     | '/forgot-password'
+    | '/profile'
     | '/register'
     | '/challenges/$storyId'
     | '/results/$storyId'
@@ -136,9 +158,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/achievements'
     | '/admin-login'
     | '/dashboard'
     | '/forgot-password'
+    | '/profile'
     | '/register'
     | '/challenges/$storyId'
     | '/results/$storyId'
@@ -149,9 +173,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AchievementsRoute: typeof AchievementsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   ChallengesStoryIdRoute: typeof ChallengesStoryIdRoute
   ResultsStoryIdRoute: typeof ResultsStoryIdRoute
@@ -167,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/achievements': {
+      id: '/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AchievementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin-login': {
@@ -188,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -237,9 +277,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AchievementsRoute: AchievementsRoute,
   AdminLoginRoute: AdminLoginRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   ChallengesStoryIdRoute: ChallengesStoryIdRoute,
   ResultsStoryIdRoute: ResultsStoryIdRoute,
@@ -250,3 +292,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
