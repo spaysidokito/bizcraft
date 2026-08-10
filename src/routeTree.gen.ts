@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
+import { Route as ChallengesStoryIdRouteImport } from './routes/challenges.$storyId'
+import { Route as ResultsStoryIdRouteImport } from './routes/results.$storyId'
+import { Route as StoriesIndexRouteImport } from './routes/stories.index'
+import { Route as StoriesStoryIdRouteImport } from './routes/stories.$storyId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChallengesIndexRoute = ChallengesIndexRouteImport.update({
+  id: '/challenges/',
+  path: '/challenges/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChallengesStoryIdRoute = ChallengesStoryIdRouteImport.update({
+  id: '/challenges/$storyId',
+  path: '/challenges/$storyId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultsStoryIdRoute = ResultsStoryIdRouteImport.update({
+  id: '/results/$storyId',
+  path: '/results/$storyId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoriesIndexRoute = StoriesIndexRouteImport.update({
+  id: '/stories/',
+  path: '/stories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoriesStoryIdRoute = StoriesStoryIdRouteImport.update({
+  id: '/stories/$storyId',
+  path: '/stories/$storyId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/register': typeof RegisterRoute
+  '/challenges/$storyId': typeof ChallengesStoryIdRoute
+  '/results/$storyId': typeof ResultsStoryIdRoute
+  '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/challenges/': typeof ChallengesIndexRoute
+  '/stories/': typeof StoriesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/register': typeof RegisterRoute
+  '/challenges/$storyId': typeof ChallengesStoryIdRoute
+  '/results/$storyId': typeof ResultsStoryIdRoute
+  '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/challenges': typeof ChallengesIndexRoute
+  '/stories': typeof StoriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/register': typeof RegisterRoute
+  '/challenges/$storyId': typeof ChallengesStoryIdRoute
+  '/results/$storyId': typeof ResultsStoryIdRoute
+  '/stories/$storyId': typeof StoriesStoryIdRoute
+  '/challenges/': typeof ChallengesIndexRoute
+  '/stories/': typeof StoriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin-login'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/register'
+    | '/challenges/$storyId'
+    | '/results/$storyId'
+    | '/stories/$storyId'
+    | '/challenges/'
+    | '/stories/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin-login'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/register'
+    | '/challenges/$storyId'
+    | '/results/$storyId'
+    | '/stories/$storyId'
+    | '/challenges'
+    | '/stories'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin-login'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/register'
+    | '/challenges/$storyId'
+    | '/results/$storyId'
+    | '/stories/$storyId'
+    | '/challenges/'
+    | '/stories/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  DashboardRoute: typeof DashboardRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  RegisterRoute: typeof RegisterRoute
+  ChallengesStoryIdRoute: typeof ChallengesStoryIdRoute
+  ResultsStoryIdRoute: typeof ResultsStoryIdRoute
+  StoriesStoryIdRoute: typeof StoriesStoryIdRoute
+  ChallengesIndexRoute: typeof ChallengesIndexRoute
+  StoriesIndexRoute: typeof StoriesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +169,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/': {
+      id: '/challenges/'
+      path: '/challenges'
+      fullPath: '/challenges/'
+      preLoaderRoute: typeof ChallengesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$storyId': {
+      id: '/challenges/$storyId'
+      path: '/challenges/$storyId'
+      fullPath: '/challenges/$storyId'
+      preLoaderRoute: typeof ChallengesStoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/results/$storyId': {
+      id: '/results/$storyId'
+      path: '/results/$storyId'
+      fullPath: '/results/$storyId'
+      preLoaderRoute: typeof ResultsStoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stories/': {
+      id: '/stories/'
+      path: '/stories'
+      fullPath: '/stories/'
+      preLoaderRoute: typeof StoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stories/$storyId': {
+      id: '/stories/$storyId'
+      path: '/stories/$storyId'
+      fullPath: '/stories/$storyId'
+      preLoaderRoute: typeof StoriesStoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  DashboardRoute: DashboardRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  RegisterRoute: RegisterRoute,
+  ChallengesStoryIdRoute: ChallengesStoryIdRoute,
+  ResultsStoryIdRoute: ResultsStoryIdRoute,
+  StoriesStoryIdRoute: StoriesStoryIdRoute,
+  ChallengesIndexRoute: ChallengesIndexRoute,
+  StoriesIndexRoute: StoriesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
