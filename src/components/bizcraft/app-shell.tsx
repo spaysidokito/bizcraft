@@ -21,15 +21,14 @@ import { Button } from "@/components/ui/button";
 
 export function BizCraftLogo({ compact = false }: { compact?: boolean }) {
   return (
-    <span className="flex items-center gap-2">
-      <span className="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground">
-        <GraduationCap className="size-5" />
-      </span>
-      {!compact && (
-        <span className="font-display text-lg font-bold tracking-tight">
-          Biz<span className="text-primary">Craft</span>
-        </span>
-      )}
+    <span className="flex items-center">
+      <img
+        src={logoAsset.url}
+        alt="BizCraft — Learn, Play, Grow"
+        width={512}
+        height={341}
+        className={cn("w-auto object-contain", compact ? "h-8" : "h-10")}
+      />
     </span>
   );
 }
