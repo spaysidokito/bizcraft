@@ -9,14 +9,14 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Create Student Account — BizCraft" },
+      { title: "Create Account — BizCraft" },
       {
         name: "description",
         content:
-          "Register a BizCraft student account to start learning from real entrepreneur stories and earning XP.",
+          "Register a BizCraft account to start learning from real entrepreneur stories and earning XP.",
       },
-      { property: "og:title", content: "Create Student Account — BizCraft" },
-      { property: "og:description", content: "Register as a BizCraft ABM student." },
+      { property: "og:title", content: "Create Account — BizCraft" },
+      { property: "og:description", content: "Register as a BizCraft learner." },
     ],
   }),
   component: RegisterPage,
@@ -50,7 +50,7 @@ function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
           <BizCraftLogo />
-          <h1 className="mt-4 font-display text-2xl font-bold">Create your student account</h1>
+          <h1 className="mt-4 font-display text-2xl font-bold">Create your account</h1>
         </div>
 
         <form

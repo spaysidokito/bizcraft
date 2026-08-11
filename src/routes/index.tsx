@@ -66,7 +66,7 @@ function LoginPage() {
               id="identifier"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder="student@bizcraft.edu.ph"
+              placeholder="you@example.com"
               autoComplete="username"
               required
             />
