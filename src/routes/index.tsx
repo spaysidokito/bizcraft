@@ -107,7 +107,7 @@ function LoginPage() {
         <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/50 p-4 text-sm">
           <p className="font-semibold">Demo accounts</p>
           <p className="mt-1 text-muted-foreground">
-            Student: <span className="font-mono">andrea</span> /{" "}
+            Learner: <span className="font-mono">andrea</span> /{" "}
             <span className="font-mono">student123</span>
           </p>
           <p className="text-muted-foreground">
