@@ -54,9 +54,6 @@ function LoginPage() {
         <div className="mb-6 flex flex-col items-center text-center">
           <BizCraftLogo />
           <h1 className="mt-4 font-display text-2xl font-bold">Welcome to BizCraft</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Gamified entrepreneurship learning for Grade 11 &amp; 12 ABM students
-          </p>
         </div>
 
         <form

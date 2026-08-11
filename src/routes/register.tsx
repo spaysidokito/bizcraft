@@ -5,13 +5,6 @@ import { BizCraftLogo } from "@/components/bizcraft/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -37,8 +30,6 @@ function RegisterPage() {
     email: "",
     username: "",
     password: "",
-    grade_level: "Grade 11" as "Grade 11" | "Grade 12",
-    section: "",
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -92,33 +83,6 @@ function RegisterPage() {
                 id="username"
                 value={form.username}
                 onChange={(e) => set("username", e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="grade">Grade Level</Label>
-              <Select
-                value={form.grade_level}
-                onValueChange={(v) => set("grade_level", v)}
-              >
-                <SelectTrigger id="grade">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Grade 11">Grade 11</SelectItem>
-                  <SelectItem value="Grade 12">Grade 12</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="section">Section</Label>
-              <Input
-                id="section"
-                value={form.section}
-                onChange={(e) => set("section", e.target.value)}
-                placeholder="ABM - Henry Sy"
                 required
               />
             </div>
