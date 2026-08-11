@@ -82,8 +82,8 @@ interface StoreValue {
     email: string;
     username: string;
     password: string;
-    grade_level: "Grade 11" | "Grade 12";
-    section: string;
+    grade_level?: "Grade 11" | "Grade 12";
+    section?: string;
   }) => { ok: boolean; error?: string };
   logout: () => void;
   statsFor: (studentId: string) => StudentStats;
@@ -171,8 +171,8 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
       };
       const newProfile: StudentProfile = {
         user_id: id,
-        grade_level: input.grade_level,
-        section: input.section.trim(),
+        grade_level: input.grade_level ?? "Grade 11",
+        section: input.section?.trim() ?? "",
         xp: 0,
         avatar_url: null,
       };

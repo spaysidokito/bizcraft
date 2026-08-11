@@ -46,7 +46,6 @@ function DashboardPage() {
     <AppShell
       role="student"
       title={`Welcome back, ${currentUser.full_name.split(" ")[0]}!`}
-      subtitle={`${profile.grade_level} · ${profile.section}`}
     >
       <div className="space-y-6">
         <LevelPanel xp={profile.xp} />

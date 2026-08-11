@@ -96,33 +96,6 @@ function RegisterPage() {
               />
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="grade">Grade Level</Label>
-              <Select
-                value={form.grade_level}
-                onValueChange={(v) => set("grade_level", v)}
-              >
-                <SelectTrigger id="grade">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Grade 11">Grade 11</SelectItem>
-                  <SelectItem value="Grade 12">Grade 12</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="section">Section</Label>
-              <Input
-                id="section"
-                value={form.section}
-                onChange={(e) => set("section", e.target.value)}
-                placeholder="ABM - Henry Sy"
-                required
-              />
-            </div>
-          </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <Input
