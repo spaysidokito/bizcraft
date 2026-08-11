@@ -3,6 +3,8 @@ import photo2 from "@/assets/entrepreneur-2.jpg";
 import photo3 from "@/assets/entrepreneur-3.jpg";
 import photo4 from "@/assets/entrepreneur-4.jpg";
 import photo5 from "@/assets/entrepreneur-5.jpg";
+import photo6 from "@/assets/entrepreneur-6.jpg";
+import photo7 from "@/assets/entrepreneur-7.jpg";
 import type {
   Badge,
   EntrepreneurStory,
@@ -198,6 +200,58 @@ export const SEED_STORIES: EntrepreneurStory[] = [
       "Standard procedures keep product quality consistent.",
       "Social impact and profit can grow together.",
       "Compliance and licensing open bigger markets.",
+    ],
+    is_published: true,
+  },
+  {
+    id: "s-6",
+    name: "Jeffrey Santos",
+    business_name: "Kuya Jeff's Food House",
+    business_type: "Food & Beverage",
+    location: "Caloocan City, Metro Manila",
+    photo_url: photo6,
+    short_description:
+      "Started as a sidewalk pares cart and grew into a small eatery serving silog meals, pares, and lugaw.",
+    biography:
+      "Jeffrey Santos, 41, is known to customers as Kuya Jeff. He began selling pares from a wooden cart in 2015 after losing his job at a factory. Today he runs a 20-seat eatery with two helpers and a steady lunch crowd.",
+    video_url: "https://www.youtube.com/watch?v=example-kuyajeff",
+    content: [
+      "Q: How did you start Kuya Jeff's Food House?\nA: I had PHP 1,500 and a second-hand gas stove. I cooked pares at home, loaded it into a cart, and sold it outside a call center during night shifts. I chose that spot because workers were hungry and had cash.",
+      "Q: What was your first big problem?\nA: Food spoilage. I tried to offer too many items and ended up throwing away unsold meat and vegetables. I learned to keep the menu small and cook only what I could sell in one day.",
+      "Q: How do you keep customers coming back?\nA: I remember their names and orders. A returning customer who likes extra garlic gets extra garlic without asking. Small kindness is cheaper than advertising.",
+      "Q: What is your daily routine?\nA: I buy ingredients at 4:00 AM, prep until 9:00 AM, open at 10:00 AM, and close when food runs out. I never keep leftovers overnight because quality is our reputation.",
+    ],
+    key_lessons: [
+      "Choose a location where your target customers already gather.",
+      "A small, fresh menu is better than a large, wasteful one.",
+      "Personal service creates loyalty that competitors cannot copy.",
+      "Daily discipline in quality control protects your brand.",
+    ],
+    is_published: true,
+  },
+  {
+    id: "s-7",
+    name: "Klarein Reyes",
+    business_name: "Klarein Prints & Notes",
+    business_type: "Service / Printing",
+    location: "University Belt, Manila",
+    photo_url: photo7,
+    short_description:
+      "A working student who turned her campus printing and note-taking service into a steady income while finishing her degree.",
+    biography:
+      "Klarein Reyes, 22, is a third-year business student who started printing handouts and selling typed reviewers to classmates in 2023. She now serves three course organizations and manages two part-time assistants.",
+    video_url: "https://www.youtubeus.com/watch?v=example-klarein",
+    content: [
+      "Q: How did you start while studying?\nA: I noticed classmates were always rushing to print reports before deadlines. I bought a second-hand printer with my allowance savings and offered same-day printing with free delivery inside campus.",
+      "Q: How do you balance school and business?\nA: I treat business hours like class hours. I only accept rush orders on weekends, and I keep a shared calendar so my assistants know their shifts. Saying no is part of the system.",
+      "Q: What is your biggest challenge?\nA: Cash flow. Organizations pay late sometimes, but I still need to buy ink and paper. I now ask for a deposit for large orders so I do not use my tuition money to cover supplies.",
+      "Q: What advice do you give to other working students?\nA: Pick a service that solves a problem you already understand. If you are a student, you know student problems. That is your market advantage.",
+    ],
+    key_lessons: [
+      "Your own daily problems can reveal a profitable service idea.",
+      "Set clear business hours so school does not suffer.",
+      "Use deposits to protect cash flow on large orders.",
+      "Your personal experience in a market is a real competitive edge.",
     ],
     is_published: true,
   },
@@ -536,6 +590,133 @@ export const SEED_QUESTIONS: QuizQuestion[] = [
     ],
     0,
     "Regulatory compliance unlocks larger and more profitable markets.",
+  ),
+
+  q(
+    "q-6-1",
+    "s-6",
+    "How much starting capital did Kuya Jeff use for his pares cart?",
+    ["PHP 15,000", "PHP 1,500", "PHP 50,000", "PHP 500"],
+    1,
+    "He started with PHP 1,500 and a second-hand gas stove.",
+  ),
+  q(
+    "q-6-2",
+    "s-6",
+    "Why did Kuya Jeff choose to sell outside a call center?",
+    [
+      "The rent was free",
+      "Workers were hungry and had cash to spend",
+      "His cousin worked there",
+      "There were no other food sellers nearby",
+    ],
+    1,
+    "He selected a location where his target customers already gathered during night shifts.",
+  ),
+  q(
+    "q-6-3",
+    "s-6",
+    "What lesson did Kuya Jeff learn about his menu?",
+    [
+      "A large menu attracts more customers",
+      "A small, fresh menu reduces spoilage",
+      "Expensive ingredients always taste better",
+      "Customers prefer frozen food",
+    ],
+    1,
+    "Offering too many items caused spoilage. A focused menu helped him cook only what he could sell.",
+  ),
+  q(
+    "q-6-4",
+    "s-6",
+    "How does Kuya Jeff build customer loyalty?",
+    [
+      "He gives free meals every Friday",
+      "He remembers names and personal preferences",
+      "He posts advertisements online daily",
+      "He lowers prices every month",
+    ],
+    1,
+    "Personal service, like remembering a regular's order, creates loyalty that advertising cannot buy.",
+  ),
+  q(
+    "q-6-5",
+    "s-6",
+    "Why does Kuya Jeff avoid keeping leftovers overnight?",
+    [
+      "He has no refrigerator",
+      "Quality is his reputation",
+      "Leftovers are donated to neighbors",
+      "It is required by law",
+    ],
+    1,
+    "Daily freshness protects the eatery's reputation and keeps customers returning.",
+  ),
+
+  q(
+    "q-7-1",
+    "s-7",
+    "What problem did Klarein notice among her classmates?",
+    [
+      "They needed tutoring in math",
+      "They rushed to print reports before deadlines",
+      "They wanted cheaper uniforms",
+      "They needed transportation to school",
+    ],
+    1,
+    "She saw classmates struggling to print reports on time and offered same-day campus printing.",
+  ),
+  q(
+    "q-7-2",
+    "s-7",
+    "How did Klarein fund her first printer?",
+    [
+      "She borrowed from a classmate",
+      "She used her allowance savings",
+      "She won a school contest",
+      "She asked her parents for a loan",
+    ],
+    1,
+    "She saved from her allowance to buy a second-hand printer.",
+  ),
+  q(
+    "q-7-3",
+    "s-7",
+    "How does Klarein protect her cash flow for large orders?",
+    [
+      "She delivers before payment",
+      "She asks for a deposit",
+      "She refuses all large orders",
+      "She uses her tuition money first",
+    ],
+    1,
+    "A deposit ensures she can buy ink and paper without using her tuition money.",
+  ),
+  q(
+    "q-7-4",
+    "s-7",
+    "What strategy helps Klarein balance school and business?",
+    [
+      "She skips classes to fill orders",
+      "She treats business hours like class hours",
+      "She only studies during exams",
+      "She hires full-time employees",
+    ],
+    1,
+    "Setting clear business hours and saying no to rush weekday orders protects her studies.",
+  ),
+  q(
+    "q-7-5",
+    "s-7",
+    "What advantage does Klarein say working students have?",
+    [
+      "They have more free time",
+      "They understand their own market's problems",
+      "They do not pay taxes",
+      "They receive free school supplies",
+    ],
+    1,
+    "Being a student gives her direct insight into student needs, which is a competitive edge.",
   ),
 ];
 
