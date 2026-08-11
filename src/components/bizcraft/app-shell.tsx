@@ -4,7 +4,6 @@ import {
   Award,
   BookOpen,
   ClipboardList,
-  GraduationCap,
   LayoutDashboard,
   LogOut,
   Medal,
@@ -14,6 +13,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import logoAsset from "@/assets/bizcraft-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 import { useBizCraft } from "@/lib/bizcraft/store";
 import { levelForXp } from "@/lib/bizcraft/data";
