@@ -203,6 +203,58 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     ],
     is_published: true,
   },
+  {
+    id: "s-6",
+    name: "Jeffrey Santos",
+    business_name: "Kuya Jeff's Food House",
+    business_type: "Food & Beverage",
+    location: "Caloocan City, Metro Manila",
+    photo_url: photo6,
+    short_description:
+      "Started as a sidewalk pares cart and grew into a small eatery serving silog meals, pares, and lugaw.",
+    biography:
+      "Jeffrey Santos, 41, is known to customers as Kuya Jeff. He began selling pares from a wooden cart in 2015 after losing his job at a factory. Today he runs a 20-seat eatery with two helpers and a steady lunch crowd.",
+    video_url: "https://www.youtube.com/watch?v=example-kuyajeff",
+    content: [
+      "Q: How did you start Kuya Jeff's Food House?\nA: I had PHP 1,500 and a second-hand gas stove. I cooked pares at home, loaded it into a cart, and sold it outside a call center during night shifts. I chose that spot because workers were hungry and had cash.",
+      "Q: What was your first big problem?\nA: Food spoilage. I tried to offer too many items and ended up throwing away unsold meat and vegetables. I learned to keep the menu small and cook only what I could sell in one day.",
+      "Q: How do you keep customers coming back?\nA: I remember their names and orders. A returning customer who likes extra garlic gets extra garlic without asking. Small kindness is cheaper than advertising.",
+      "Q: What is your daily routine?\nA: I buy ingredients at 4:00 AM, prep until 9:00 AM, open at 10:00 AM, and close when food runs out. I never keep leftovers overnight because quality is our reputation.",
+    ],
+    key_lessons: [
+      "Choose a location where your target customers already gather.",
+      "A small, fresh menu is better than a large, wasteful one.",
+      "Personal service creates loyalty that competitors cannot copy.",
+      "Daily discipline in quality control protects your brand.",
+    ],
+    is_published: true,
+  },
+  {
+    id: "s-7",
+    name: "Klarein Reyes",
+    business_name: "Klarein Prints & Notes",
+    business_type: "Service / Printing",
+    location: "University Belt, Manila",
+    photo_url: photo7,
+    short_description:
+      "A working student who turned her campus printing and note-taking service into a steady income while finishing her degree.",
+    biography:
+      "Klarein Reyes, 22, is a third-year business student who started printing handouts and selling typed reviewers to classmates in 2023. She now serves three course organizations and manages two part-time assistants.",
+    video_url: "https://www.youtubeus.com/watch?v=example-klarein",
+    content: [
+      "Q: How did you start while studying?\nA: I noticed classmates were always rushing to print reports before deadlines. I bought a second-hand printer with my allowance savings and offered same-day printing with free delivery inside campus.",
+      "Q: How do you balance school and business?\nA: I treat business hours like class hours. I only accept rush orders on weekends, and I keep a shared calendar so my assistants know their shifts. Saying no is part of the system.",
+      "Q: What is your biggest challenge?\nA: Cash flow. Organizations pay late sometimes, but I still need to buy ink and paper. I now ask for a deposit for large orders so I do not use my tuition money to cover supplies.",
+      "Q: What advice do you give to other working students?\nA: Pick a service that solves a problem you already understand. If you are a student, you know student problems. That is your market advantage.",
+    ],
+    key_lessons: [
+      "Your own daily problems can reveal a profitable service idea.",
+      "Set clear business hours so school does not suffer.",
+      "Use deposits to protect cash flow on large orders.",
+      "Your personal experience in a market is a real competitive edge.",
+    ],
+    is_published: true,
+  },
 ];
 
 function q(
