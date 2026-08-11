@@ -1,10 +1,5 @@
-import photo1 from "@/assets/entrepreneur-1.jpg";
-import photo2 from "@/assets/entrepreneur-2.jpg";
-import photo3 from "@/assets/entrepreneur-3.jpg";
-import photo4 from "@/assets/entrepreneur-4.jpg";
-import photo5 from "@/assets/entrepreneur-5.jpg";
-import photo6 from "@/assets/entrepreneur-6.jpg";
-import photo7 from "@/assets/entrepreneur-7.jpg";
+const PLACEHOLDER_PHOTO = "/placeholder.svg";
+
 import type {
   Badge,
   EntrepreneurStory,
@@ -79,7 +74,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Nanay Lou's Bakeshop",
     business_type: "Food & Beverage",
     location: "Malolos, Bulacan",
-    photo_url: photo1,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "Started with a borrowed oven and PHP 3,000 capital. Now supplies bread to 14 sari-sari stores.",
     biography:
@@ -105,7 +100,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Kapé Tres Coffee",
     business_type: "Retail / Café",
     location: "Baguio City, Benguet",
-    photo_url: photo2,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "Left a call center job to open a 12-seat café sourcing beans directly from Benguet farmers.",
     biography:
@@ -131,7 +126,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Thrift by Cam",
     business_type: "Online Retail / E-commerce",
     location: "Quezon City, Metro Manila",
-    photo_url: photo3,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "Turned a college side hustle selling thrifted clothes on Facebook into a full-time online shop.",
     biography:
@@ -157,7 +152,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Lim Hardware & Construction Supply",
     business_type: "Wholesale / Hardware",
     location: "Iloilo City, Iloilo",
-    photo_url: photo4,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "A 28-year-old family hardware store that survived two typhoons and a failed expansion.",
     biography:
@@ -183,7 +178,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Halamang Gawa Handmade",
     business_type: "Manufacturing / Handicraft",
     location: "Bacolod City, Negros Occidental",
-    photo_url: photo5,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "Makes handmade soaps and candles from local coconut oil, employing five women in her barangay.",
     biography:
@@ -209,7 +204,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Kuya Jeff's Food House",
     business_type: "Food & Beverage",
     location: "Caloocan City, Metro Manila",
-    photo_url: photo6,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "Started as a sidewalk pares cart and grew into a small eatery serving silog meals, pares, and lugaw.",
     biography:
@@ -235,7 +230,7 @@ export const SEED_STORIES: EntrepreneurStory[] = [
     business_name: "Klarein Prints & Notes",
     business_type: "Service / Printing",
     location: "University Belt, Manila",
-    photo_url: photo7,
+    photo_url: PLACEHOLDER_PHOTO,
     short_description:
       "A working student who turned her campus printing and note-taking service into a steady income while finishing her degree.",
     biography:
