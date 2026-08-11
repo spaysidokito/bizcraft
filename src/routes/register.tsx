@@ -5,13 +5,6 @@ import { BizCraftLogo } from "@/components/bizcraft/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -37,8 +30,6 @@ function RegisterPage() {
     email: "",
     username: "",
     password: "",
-    grade_level: "Grade 11" as "Grade 11" | "Grade 12",
-    section: "",
   });
   const [error, setError] = useState<string | null>(null);
 
