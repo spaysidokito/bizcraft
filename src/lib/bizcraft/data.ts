@@ -3,6 +3,8 @@ import photo2 from "@/assets/entrepreneur-2.jpg";
 import photo3 from "@/assets/entrepreneur-3.jpg";
 import photo4 from "@/assets/entrepreneur-4.jpg";
 import photo5 from "@/assets/entrepreneur-5.jpg";
+import photo6 from "@/assets/entrepreneur-6.jpg";
+import photo7 from "@/assets/entrepreneur-7.jpg";
 import type {
   Badge,
   EntrepreneurStory,
