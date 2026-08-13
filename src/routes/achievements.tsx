@@ -39,7 +39,7 @@ function AchievementsPage() {
               key={badge.id}
               className={cn(
                 "rounded-xl border p-5 shadow-card",
-                unlocked ? "border-border bg-card" : "border-dashed border-border bg-muted/40",
+                unlocked ? "border-border bg-card-story" : "border-dashed border-border bg-muted/40",
               )}
             >
               <span

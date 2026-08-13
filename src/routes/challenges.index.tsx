@@ -37,7 +37,7 @@ function ChallengesPage() {
           return (
             <div
               key={story.id}
-              className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-card sm:flex-row sm:items-center"
+              className="flex flex-col gap-4 rounded-xl border border-border bg-card-story p-4 shadow-card sm:flex-row sm:items-center"
             >
               <img
                 src={story.photo_url}

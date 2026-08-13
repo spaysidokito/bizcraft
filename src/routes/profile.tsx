@@ -36,7 +36,7 @@ function ProfilePage() {
   return (
     <AppShell role="student" title="Profile" subtitle="Your learning record in BizCraft">
       <div className="space-y-6">
-        <div className="flex flex-col items-center gap-4 rounded-xl border border-border bg-card p-6 text-center shadow-card sm:flex-row sm:text-left">
+        <div className="flex flex-col items-center gap-4 rounded-xl border border-border bg-card-story p-6 text-center shadow-card sm:flex-row sm:text-left">
           <span className="grid size-20 place-items-center rounded-full bg-primary-soft text-primary">
             <UserIcon className="size-9" />
           </span>
@@ -58,7 +58,7 @@ function ProfilePage() {
           <StatCard label="Average Quiz Score" value={`${stats.average_score}%`} tone="purple" />
         </div>
 
-        <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <section className="rounded-xl border border-border bg-card-story p-5 shadow-card">
           <h2 className="font-display text-base font-semibold">Earned Badges</h2>
           {stats.badges.length === 0 ? (
             <p className="mt-2 text-sm text-muted-foreground">

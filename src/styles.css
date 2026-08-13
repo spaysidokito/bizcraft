@@ -7,7 +7,7 @@
 /*
  * BizCraft design system
  * Light, practical school-project aesthetic: white cards on light gray,
- * purple primary, orange secondary accent, moderate radius, subtle shadows.
+ * blue primary, yellow secondary accent, moderate radius, subtle shadows.
  */
 
 @theme inline {
@@ -46,6 +46,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
+  --color-card-story: var(--card-story);
   --color-court: var(--court);
   --color-court-line: var(--court-line);
   --color-chart-1: var(--chart-1);
@@ -53,78 +54,92 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --shadow-card: 0 1px 2px oklch(0.2 0.03 290 / 0.06), 0 4px 12px oklch(0.2 0.03 290 / 0.06);
-  --shadow-card-hover: 0 2px 4px oklch(0.2 0.03 290 / 0.08), 0 10px 24px oklch(0.2 0.03 290 / 0.1);
+  --shadow-card: 0 1px 2px oklch(0.2 0.04 250 / 0.06), 0 4px 12px oklch(0.2 0.04 250 / 0.06);
+  --shadow-card-hover: 0 2px 4px oklch(0.2 0.04 250 / 0.08), 0 10px 24px oklch(0.2 0.04 250 / 0.1);
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.976 0.003 285);
-  --foreground: oklch(0.22 0.02 285);
+  --background: oklch(0.975 0.008 250);
+  --foreground: oklch(0.22 0.02 250);
   --surface: oklch(1 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.02 285);
+  --card-foreground: oklch(0.22 0.02 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.02 285);
-  --primary: oklch(0.51 0.19 295);
+  --popover-foreground: oklch(0.22 0.02 250);
+  --primary: oklch(0.46 0.22 250);
   --primary-foreground: oklch(0.99 0 0);
-  --primary-soft: oklch(0.955 0.025 295);
-  --secondary: oklch(0.96 0.008 285);
-  --secondary-foreground: oklch(0.3 0.03 285);
-  --orange: oklch(0.7 0.17 52);
-  --orange-foreground: oklch(0.99 0 0);
-  --orange-soft: oklch(0.96 0.04 65);
+  --primary-soft: oklch(0.94 0.04 250);
+  --secondary: oklch(0.96 0.008 250);
+  --secondary-foreground: oklch(0.3 0.03 250);
+  --orange: oklch(0.82 0.18 90);
+  --orange-foreground: oklch(0.22 0.05 60);
+  --orange-soft: oklch(0.97 0.06 95);
   --success: oklch(0.6 0.14 152);
   --success-foreground: oklch(0.99 0 0);
   --success-soft: oklch(0.95 0.04 152);
-  --muted: oklch(0.965 0.005 285);
-  --muted-foreground: oklch(0.52 0.02 285);
-  --accent: oklch(0.955 0.025 295);
-  --accent-foreground: oklch(0.4 0.16 295);
+  --muted: oklch(0.965 0.006 250);
+  --muted-foreground: oklch(0.52 0.02 250);
+  --accent: oklch(0.94 0.04 250);
+  --accent-foreground: oklch(0.3 0.18 250);
   --destructive: oklch(0.58 0.21 25);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.915 0.006 285);
-  --input: oklch(0.9 0.006 285);
-  --ring: oklch(0.51 0.19 295);
+  --border: oklch(0.91 0.01 250);
+  --input: oklch(0.9 0.01 250);
+  --ring: oklch(0.46 0.22 250);
   --court: oklch(0.86 0.07 68);
   --court-line: oklch(0.99 0 0 / 0.75);
-  --chart-1: oklch(0.51 0.19 295);
-  --chart-2: oklch(0.7 0.17 52);
+  --chart-1: oklch(0.46 0.22 250);
+  --chart-2: oklch(0.82 0.18 90);
   --chart-3: oklch(0.6 0.14 152);
-  --chart-4: oklch(0.65 0.12 250);
-  --chart-5: oklch(0.7 0.1 320);
+  --chart-4: oklch(0.65 0.12 200);
+  --chart-5: oklch(0.7 0.1 280);
+  /* Unified blue background — login, dashboard, admin */
+  --student-bg-from: oklch(0.76 0.10 255);
+  --student-bg-to: oklch(0.68 0.12 248);
+  --student-app-bg-from: oklch(0.76 0.10 255);
+  --student-app-bg-to: oklch(0.68 0.12 248);
+  /* Story cards — slight warm yellow tint */
+  --card-story: oklch(0.98 0.04 90);
 }
 
 .dark {
-  --background: oklch(0.19 0.02 285);
-  --foreground: oklch(0.97 0.003 285);
-  --surface: oklch(0.24 0.02 285);
-  --card: oklch(0.24 0.02 285);
-  --card-foreground: oklch(0.97 0.003 285);
-  --popover: oklch(0.24 0.02 285);
-  --popover-foreground: oklch(0.97 0.003 285);
-  --primary: oklch(0.68 0.16 295);
-  --primary-foreground: oklch(0.17 0.02 285);
-  --primary-soft: oklch(0.3 0.05 295);
-  --secondary: oklch(0.3 0.02 285);
-  --secondary-foreground: oklch(0.97 0.003 285);
-  --orange: oklch(0.74 0.16 52);
-  --orange-foreground: oklch(0.19 0.02 285);
-  --orange-soft: oklch(0.32 0.06 52);
+  --background: oklch(0.17 0.03 250);
+  --foreground: oklch(0.97 0.005 250);
+  --surface: oklch(0.22 0.03 250);
+  --card: oklch(0.22 0.03 250);
+  --card-foreground: oklch(0.97 0.005 250);
+  --popover: oklch(0.22 0.03 250);
+  --popover-foreground: oklch(0.97 0.005 250);
+  --primary: oklch(0.65 0.19 250);
+  --primary-foreground: oklch(0.17 0.03 250);
+  --primary-soft: oklch(0.28 0.06 250);
+  --secondary: oklch(0.28 0.03 250);
+  --secondary-foreground: oklch(0.97 0.005 250);
+  --orange: oklch(0.82 0.17 90);
+  --orange-foreground: oklch(0.17 0.03 250);
+  --orange-soft: oklch(0.32 0.07 90);
   --success: oklch(0.68 0.14 152);
   --success-foreground: oklch(0.17 0.02 285);
   --success-soft: oklch(0.3 0.05 152);
-  --muted: oklch(0.28 0.02 285);
-  --muted-foreground: oklch(0.72 0.02 285);
-  --accent: oklch(0.3 0.05 295);
-  --accent-foreground: oklch(0.9 0.05 295);
+  --muted: oklch(0.26 0.03 250);
+  --muted-foreground: oklch(0.72 0.02 250);
+  --accent: oklch(0.28 0.06 250);
+  --accent-foreground: oklch(0.9 0.06 250);
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(1 0 0 / 0.12);
   --input: oklch(1 0 0 / 0.16);
-  --ring: oklch(0.68 0.16 295);
+  --ring: oklch(0.65 0.19 250);
   --court: oklch(0.5 0.07 68);
   --court-line: oklch(1 0 0 / 0.5);
+  /* Unified blue background dark mode */
+  --student-bg-from: oklch(0.42 0.14 255);
+  --student-bg-to: oklch(0.34 0.16 248);
+  --student-app-bg-from: oklch(0.42 0.14 255);
+  --student-app-bg-to: oklch(0.34 0.16 248);
+  /* Story cards dark mode — muted warm yellow */
+  --card-story: oklch(0.26 0.04 85);
 }
 
 @layer base {
@@ -144,6 +159,24 @@
   h4 {
     font-family: var(--font-display);
   }
+}
+
+/* Student login page — pale blue background */
+.student-bg {
+  background: linear-gradient(
+    135deg,
+    var(--student-bg-from) 0%,
+    var(--student-bg-to) 100%
+  );
+}
+
+/* Student app shell (dashboard + inner pages) — light warm yellow background */
+.student-app-bg {
+  background: linear-gradient(
+    150deg,
+    var(--student-app-bg-from) 0%,
+    var(--student-app-bg-to) 100%
+  );
 }
 
 /* Basketball quiz animations */

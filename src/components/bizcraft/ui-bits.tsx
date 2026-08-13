@@ -20,7 +20,7 @@ export function StatCard({
     green: "bg-success-soft text-success",
   } as const;
   return (
-    <div className="rounded-xl border border-border bg-card p-4 shadow-card">
+    <div className="rounded-xl border border-border bg-card-story p-4 shadow-card">
       <div className="flex items-center gap-3">
         {icon && (
           <span className={cn("grid size-10 place-items-center rounded-lg", tones[tone])}>
@@ -63,7 +63,7 @@ export function LevelPanel({ xp }: { xp: number }) {
   const next = nextLevelForXp(xp);
   const pct = levelProgress(xp);
   return (
-    <div className="rounded-xl border border-border bg-card p-5 shadow-card">
+    <div className="rounded-xl border border-border bg-card-story p-5 shadow-card">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

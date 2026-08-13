@@ -48,7 +48,7 @@ function AdminBadges() {
     >
       {editing && (
         <form
-          className="mb-6 space-y-4 rounded-xl border border-border bg-card p-5 shadow-card"
+          className="mb-6 space-y-4 rounded-xl border border-border bg-card-story p-5 shadow-card"
           onSubmit={(e) => {
             e.preventDefault();
             saveBadge(editing);
@@ -91,7 +91,7 @@ function AdminBadges() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         {db.badges.map((b) => (
-          <div key={b.id} className="rounded-xl border border-border bg-card p-4 shadow-card">
+          <div key={b.id} className="rounded-xl border border-border bg-card-story p-4 shadow-card">
             <p className="font-display text-base font-semibold">{b.name}</p>
             <p className="text-sm text-muted-foreground">{b.description}</p>
             <p className="mt-1 font-mono text-xs text-muted-foreground">{b.requirement}</p>

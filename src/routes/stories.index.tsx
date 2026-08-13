@@ -45,13 +45,13 @@ function StoriesPage() {
       title="Entrepreneur Stories"
       subtitle="Learning modules based on real interviews with business owners"
     >
-      <div className="mb-6 relative max-w-sm">
+      <div className="mb-6 relative max-w-md">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, business or location"
-          className="pl-9"
+          className="pl-9 bg-white border-2 border-border shadow-card rounded-xl h-11 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20"
         />
       </div>
 
@@ -62,7 +62,7 @@ function StoriesPage() {
           return (
             <article
               key={story.id}
-              className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-shadow hover:shadow-card-hover"
+              className="flex flex-col overflow-hidden rounded-xl border border-border bg-card-story shadow-card transition-shadow hover:shadow-card-hover"
             >
               <img
                 src={story.photo_url}

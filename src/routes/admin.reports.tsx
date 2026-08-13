@@ -36,7 +36,7 @@ function AdminReports() {
         </Button>
       }
     >
-      <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+      <section className="rounded-xl border border-border bg-card-story p-5 shadow-card">
         <SectionHeading title="Recent Quiz Attempts" />
         <div className="overflow-x-auto">
           <table className="w-full min-w-[600px] text-sm">

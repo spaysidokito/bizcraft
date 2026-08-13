@@ -60,7 +60,7 @@ function AdminDashboard() {
           <StatCard label="Badges Defined" value={db.badges.length} tone="green" />
         </div>
 
-        <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <section className="rounded-xl border border-border bg-card-story p-5 shadow-card">
           <SectionHeading title="Most Completed Stories" />
           <ul className="space-y-2">
             {completionByStory.map(({ story, count }) => (

@@ -78,7 +78,7 @@ function DashboardPage() {
               title="Continue Learning"
               description="Pick up where you left off."
             />
-            <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-card sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-4 rounded-xl border border-border bg-card-story p-4 shadow-card sm:flex-row sm:items-center">
               <img
                 src={continueStory.photo_url}
                 alt={`${continueStory.name}, owner of ${continueStory.business_name}`}
@@ -123,7 +123,7 @@ function DashboardPage() {
               return (
                 <article
                   key={story.id}
-                  className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-shadow hover:shadow-card-hover"
+                  className="flex flex-col overflow-hidden rounded-xl border border-border bg-card-story shadow-card transition-shadow hover:shadow-card-hover"
                 >
                   <img
                     src={story.photo_url}

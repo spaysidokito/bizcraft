@@ -51,17 +51,18 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-10">
+    <div className="student-bg flex min-h-screen flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
-        <div className="mb-6 flex flex-col items-center text-center">
-          <BizCraftLogo className="h-36" />
-          <h1 className="mt-4 font-display text-2xl font-bold">Welcome to BizCraft</h1>
-        </div>
 
         <form
           onSubmit={onSubmit}
-          className="space-y-4 rounded-xl border border-border bg-card p-6 shadow-card"
+          className="space-y-4 rounded-xl border border-white/30 bg-white/95 backdrop-blur-sm p-6 shadow-xl"
         >
+          <div className="flex flex-col items-center text-center pb-2">
+            <BizCraftLogo className="h-28" />
+            <h1 className="mt-2 font-display text-xl font-bold text-foreground">Welcome to BizCraft</h1>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="identifier">Email or Username</Label>
             <Input
@@ -115,10 +116,11 @@ function LoginPage() {
           </div>
         </form>
 
+
         
 
         <p className="mt-4 text-center text-sm">
-          <Link to="/admin-login" className="text-muted-foreground hover:underline">
+          <Link to="/admin-login" className="text-white/80 hover:text-white hover:underline">
             Administrator login
           </Link>
         </p>

@@ -65,7 +65,7 @@ function StoryDetailPage() {
     >
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+          <div className="overflow-hidden rounded-xl border border-border bg-card-story shadow-card">
             <img
               src={story.photo_url}
               alt={`${story.name}, owner of ${story.business_name}`}
@@ -84,7 +84,7 @@ function StoryDetailPage() {
             </div>
           </div>
 
-          <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <section className="rounded-xl border border-border bg-card-story p-5 shadow-card">
             <SectionHeading title="Video Interview" description="Watch before answering the challenge." />
             <div className="flex aspect-video w-full flex-col items-center justify-center rounded-lg border border-dashed border-border bg-muted text-center">
               <PlayCircle className="size-10 text-muted-foreground" />
@@ -98,7 +98,7 @@ function StoryDetailPage() {
             </div>
           </section>
 
-          <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <section className="rounded-xl border border-border bg-card-story p-5 shadow-card">
             <SectionHeading title="Story / Interview Transcript" />
             <div className="space-y-4">
               {story.content.map((para, i) => (
@@ -111,7 +111,7 @@ function StoryDetailPage() {
         </div>
 
         <div className="space-y-6">
-          <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <section className="rounded-xl border border-border bg-card-story p-5 shadow-card">
             <h2 className="flex items-center gap-2 font-display text-base font-semibold">
               <Lightbulb className="size-4 text-orange" /> Key Lessons
             </h2>

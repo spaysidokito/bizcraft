@@ -68,7 +68,7 @@ function AdminQuestions() {
       <div className="mb-4 max-w-sm space-y-2">
         <Label>Entrepreneur Story</Label>
         <Select value={storyFilter} onValueChange={setStoryFilter}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-white border-2 border-border shadow-card rounded-xl h-11">
             <SelectValue placeholder="Select a story" />
           </SelectTrigger>
           <SelectContent>
@@ -83,7 +83,7 @@ function AdminQuestions() {
 
       {editing && (
         <form
-          className="mb-6 space-y-4 rounded-xl border border-border bg-card p-5 shadow-card"
+          className="mb-6 space-y-4 rounded-xl border border-border bg-card-story p-5 shadow-card"
           onSubmit={(e) => {
             e.preventDefault();
             saveQuestion(editing);
@@ -154,7 +154,7 @@ function AdminQuestions() {
         {questions.map((q, i) => {
           const correct = q.choices.find((c) => c.id === q.correct_choice_id);
           return (
-            <div key={q.id} className="rounded-xl border border-border bg-card p-4 shadow-card">
+            <div key={q.id} className="rounded-xl border border-border bg-card-story p-4 shadow-card">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-wide text-muted-foreground">

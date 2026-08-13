@@ -99,7 +99,7 @@ export function AppShell({ role, title, subtitle, actions, children }: AppShellP
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className={cn("min-h-screen bg-background", "student-app-bg")}>
       {/* Sidebar */}
       <aside
         className={cn(

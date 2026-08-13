@@ -60,7 +60,7 @@ function AdminStories() {
     >
       {editing && (
         <form
-          className="mb-6 space-y-4 rounded-xl border border-border bg-card p-5 shadow-card"
+          className="mb-6 space-y-4 rounded-xl border border-border bg-card-story p-5 shadow-card"
           onSubmit={(e) => {
             e.preventDefault();
             saveStory(editing);
@@ -151,7 +151,7 @@ function AdminStories() {
         {db.entrepreneur_stories.map((s) => (
           <div
             key={s.id}
-            className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-card sm:flex-row sm:items-center"
+            className="flex flex-col gap-3 rounded-xl border border-border bg-card-story p-4 shadow-card sm:flex-row sm:items-center"
           >
             {s.photo_url && (
               <img

@@ -79,7 +79,7 @@ function AdminStudents() {
     >
       {editing && (
         <form
-          className="mb-6 space-y-4 rounded-xl border border-border bg-card p-5 shadow-card"
+          className="mb-6 space-y-4 rounded-xl border border-border bg-card-story p-5 shadow-card"
           onSubmit={(e) => {
             e.preventDefault();
             const isEditing = db.users.some((u) => u.id === editing.user.id);
@@ -155,14 +155,14 @@ function AdminStudents() {
       <div className="relative mb-4 max-w-sm">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
-          className="pl-9"
+          className="pl-9 bg-white border-2 border-border shadow-card rounded-xl h-11"
           placeholder="Search students"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-card">
+      <div className="overflow-x-auto rounded-xl border border-border bg-card-story shadow-card">
         <table className="w-full min-w-[820px] text-sm">
           <thead className="border-b border-border bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>

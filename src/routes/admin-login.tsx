@@ -38,22 +38,22 @@ function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
+    <div className="student-app-bg flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
-        <div className="mb-6 flex flex-col items-center text-center">
-          <span className="grid size-11 place-items-center rounded-lg bg-orange text-orange-foreground">
-            <ShieldCheck className="size-6" />
-          </span>
-          <h1 className="mt-4 font-display text-2xl font-bold">BizCraft Administrator</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Manage students, stories, quizzes and badges
-          </p>
-        </div>
-
         <form
           onSubmit={onSubmit}
-          className="space-y-4 rounded-xl border border-border bg-card p-6 shadow-card"
+          className="space-y-4 rounded-xl border border-white/30 bg-white/95 backdrop-blur-sm p-6 shadow-xl"
         >
+          <div className="mb-2 flex flex-col items-center text-center">
+            <span className="grid size-11 place-items-center rounded-lg bg-orange text-orange-foreground">
+              <ShieldCheck className="size-6" />
+            </span>
+            <h1 className="mt-4 font-display text-2xl font-bold">BizCraft Administrator</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Manage students, stories, quizzes and badges
+            </p>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="admin-id">Email or Username</Label>
             <Input
@@ -90,5 +90,6 @@ function AdminLoginPage() {
         </form>
       </div>
     </div>
+
   );
 }
