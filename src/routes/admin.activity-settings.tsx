@@ -367,7 +367,7 @@ function ScenarioCard({
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 function AdminActivitySettings() {
-  const { db, saveActivitySettings, saveActivityScenario, deleteActivityScenario } = useBizCraft();
+  const { db, saveActivitySettings, saveActivityScenario, deleteActivityScenario, resetActivityScenarios } = useBizCraft();
   const stored = db.activity_settings ?? DEFAULT_ACTIVITY_SETTINGS;
   const scenarios: ActivityScenario[] = db.activity_scenarios?.length
     ? db.activity_scenarios
@@ -406,6 +406,14 @@ function AdminActivitySettings() {
     if (!window.confirm("Delete this scenario? This cannot be undone.")) return;
     deleteActivityScenario(id);
     toast.success("Scenario deleted.");
+  };
+
+  const handleResetScenarios = () => {
+    if (!window.confirm("Reset all scenarios to the default question bank? Custom edits will be lost.")) return;
+    resetActivityScenarios();
+    setEditingId(null);
+    setAddingNew(false);
+    toast.success("Scenario bank reset to defaults.");
   };
 
   // Preview ring math
@@ -534,14 +542,25 @@ function AdminActivitySettings() {
               </p>
             </div>
             {!addingNew && (
-              <Button
-                id="add-scenario-btn"
-                onClick={() => { setAddingNew(true); setEditingId(null); }}
-                className="gap-2 bg-yellow-400 text-white hover:bg-yellow-500"
-                size="sm"
-              >
-                <Plus className="size-4" /> Add Scenario
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  id="reset-scenarios-btn"
+                  onClick={handleResetScenarios}
+                  className="gap-2"
+                  size="sm"
+                >
+                  <RotateCcw className="size-4" /> Reset Bank
+                </Button>
+                <Button
+                  id="add-scenario-btn"
+                  onClick={() => { setAddingNew(true); setEditingId(null); }}
+                  className="gap-2 bg-yellow-400 text-white hover:bg-yellow-500"
+                  size="sm"
+                >
+                  <Plus className="size-4" /> Add Scenario
+                </Button>
+              </div>
             )}
           </div>
 

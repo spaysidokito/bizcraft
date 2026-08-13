@@ -63,6 +63,9 @@ export const DEFAULT_ACTIVITY_SETTINGS: ActivitySettings = {
   autoAdvance: true,
 };
 
+export const ACTIVITY_SCENARIOS_VERSION = 2;
+const ACTIVITY_SCENARIOS_VERSION_KEY = "bizcraft.activity_scenarios.version";
+
 export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
   {
     id: "s1",
@@ -74,7 +77,7 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
       { id: "c3", label: "Absorb delay and wait", points: 0 },
     ],
     bestChoiceId: "c1",
-    explanation: "Finding an alternate supplier or having a backup reduces risk and keeps customers satisfied.",
+    explanation: "Find an alternate supplier quickly — reduces risk and keeps customers satisfied.",
   },
   {
     id: "s2",
@@ -86,17 +89,10 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
       { id: "c3", label: "Apologize and ask for more details", points: 2 },
     ],
     bestChoiceId: "c1",
-    explanation: "Offering refund/replace prioritizes customer trust and helps you find the root cause.",
+    explanation: "Offer refund/replace and investigate — prioritizes trust and finds root cause.",
   },
   {
     id: "s3",
-    prompt: "Describe briefly how you'd market a small food stall on a budget (one or two sentences).",
-    type: "text",
-    keywords: ["social", "facebook", "tiktok", "flyer", "word of mouth", "promo"],
-    explanation: "Low-cost channels like social media, local promos, and word-of-mouth work well for small food stalls.",
-  },
-  {
-    id: "s4",
     prompt: "You have leftover inventory that isn't selling. Which option increases cashflow fastest?",
     type: "mc",
     choices: [
@@ -105,10 +101,10 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
       { id: "c3", label: "Keep price and wait for demand", points: 0 },
     ],
     bestChoiceId: "c1",
-    explanation: "Discounts and promos can quickly convert inventory to cash while freeing storage space.",
+    explanation: "Run a limited-time discount/promo — converts inventory to cash quickly.",
   },
   {
-    id: "s5",
+    id: "s4",
     prompt: "A supplier offers a bulk discount but requires larger upfront payment. What do you consider?",
     type: "mc",
     choices: [
@@ -117,17 +113,10 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
       { id: "c3", label: "Decline to avoid cash strain", points: 1 },
     ],
     bestChoiceId: "c1",
-    explanation: "Lower unit cost is good, but only if your cashflow can handle the larger upfront payment.",
+    explanation: "Calculate cashflow and accept if affordable — weigh unit cost vs cashflow impact.",
   },
   {
-    id: "s6",
-    prompt: "You're hiring your first assistant. List one quality or question you'd focus on (one sentence).",
-    type: "text",
-    keywords: ["reliable", "honest", "experience", "availability", "skill", "attitude"],
-    explanation: "Look for reliability and attitude; these predict long-term fit more than perfect experience.",
-  },
-  {
-    id: "s7",
+    id: "s5",
     prompt: "A sudden cash shortage means you must prioritize payments. Which do you pay first?",
     type: "mc",
     choices: [
@@ -136,17 +125,10 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
       { id: "c3", label: "Delay all non-essential bills", points: 1 },
     ],
     bestChoiceId: "c1",
-    explanation: "Paying salaries and critical suppliers keeps operations running and protects relationships.",
+    explanation: "Salaries and critical suppliers — keeps operations running and protects relationships.",
   },
   {
-    id: "s8",
-    prompt: "You want to expand online. Briefly name one digital channel you'll start with and why.",
-    type: "text",
-    keywords: ["facebook", "tiktok", "instagram", "lazada", "shopee", "website"],
-    explanation: "Start with one channel where your customers already are; test, then expand.",
-  },
-  {
-    id: "s9",
+    id: "s6",
     prompt: "A competitor drops price aggressively. What strategic move protects your business?",
     type: "mc",
     choices: [
@@ -155,16 +137,277 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
       { id: "c3", label: "Ignore and maintain position", points: 1 },
     ],
     bestChoiceId: "c1",
-    explanation: "Differentiation avoids price wars and preserves margins when you compete on value.",
+    explanation: "Differentiate with service/quality — avoid price wars and preserve margins.",
+  },
+  {
+    id: "s7",
+    prompt: "Your best-selling product suddenly runs out of stock. What's your next move?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Contact supplier for rush restock and offer a substitute", points: 3 },
+      { id: "c2", label: "Wait for the next scheduled delivery", points: 1 },
+      { id: "c3", label: "Stop taking orders until restocked", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Contact supplier for rush restock and offer a substitute — minimizes lost sales while managing customer expectations.",
+  },
+  {
+    id: "s8",
+    prompt: "A key employee suddenly resigns. What's your priority action?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Reassign tasks and start hiring immediately", points: 3 },
+      { id: "c2", label: "Wait and see if workload is manageable", points: 1 },
+      { id: "c3", label: "Ask remaining staff to cover indefinitely", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Reassign tasks and start hiring immediately — keeps operations stable without burning out staff.",
+  },
+  {
+    id: "s9",
+    prompt: "You notice sales are strong online but weak in-store. What should you do?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Shift more resources to online channels", points: 3 },
+      { id: "c2", label: "Increase in-store advertising only", points: 1 },
+      { id: "c3", label: "Keep budget split evenly regardless of results", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Shift more resources to online channels — follow where demand and ROI are strongest.",
   },
   {
     id: "s10",
-    prompt: "Describe one low-cost way to get repeat customers for a small retail business.",
-    type: "text",
-    keywords: ["loyalty", "discount", "membership", "follow up", "promo", "bundle"],
-    explanation: "Simple loyalty programs, follow-ups, and small discounts encourage repeat purchases.",
+    prompt: "A regular customer asks for a discount you can't really afford to give. How do you respond?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Offer a smaller perk like added value or loyalty points instead", points: 3 },
+      { id: "c2", label: "Give the discount to keep them happy", points: 1 },
+      { id: "c3", label: "Refuse outright with no alternative", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Offer a smaller perk like added value or loyalty points instead — retains goodwill without hurting margins.",
+  },
+  {
+    id: "s11",
+    prompt: "Your monthly expenses are rising faster than revenue. What's the best first step?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Review and cut non-essential costs", points: 3 },
+      { id: "c2", label: "Raise prices immediately", points: 1 },
+      { id: "c3", label: "Take a loan to cover the gap", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Review and cut non-essential costs — addresses the root issue before adding financial risk.",
+  },
+  {
+    id: "s12",
+    prompt: "You receive a large order from a new client with no payment history. What do you do?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Request partial upfront payment before proceeding", points: 3 },
+      { id: "c2", label: "Fulfill the full order on trust", points: 1 },
+      { id: "c3", label: "Reject the order to avoid risk", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Request partial upfront payment before proceeding — balances opportunity with financial protection.",
+  },
+  {
+    id: "s13",
+    prompt: "Two staff members are in conflict and it's affecting team morale. What's your best response?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Meet with both separately then mediate a resolution", points: 3 },
+      { id: "c2", label: "Let them resolve it on their own", points: 1 },
+      { id: "c3", label: "Reprimand both publicly to set an example", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Meet with both separately then mediate a resolution — addresses the issue fairly and preserves team morale.",
+  },
+  {
+    id: "s14",
+    prompt: "A new regulation will increase your compliance costs. What's your best approach?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Review the requirement and adjust budget/pricing accordingly", points: 3 },
+      { id: "c2", label: "Delay compliance until forced to act", points: 1 },
+      { id: "c3", label: "Absorb the cost without changing anything", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Review the requirement and adjust budget/pricing accordingly — stays compliant while protecting margins.",
+  },
+  {
+    id: "s15",
+    prompt: "You're choosing between two suppliers: one cheaper but less reliable, one pricier but consistent. Which do you pick?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Choose the reliable supplier for critical items", points: 3 },
+      { id: "c2", label: "Always choose the cheaper option", points: 1 },
+      { id: "c3", label: "Split orders evenly between both without evaluation", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Choose the reliable supplier for critical items — consistency protects customer trust and operations.",
+  },
+  {
+    id: "s16",
+    prompt: "Social media engagement is dropping despite regular posting. What should you try next?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Analyze what content performed best and adjust strategy", points: 3 },
+      { id: "c2", label: "Post more frequently without changes", points: 1 },
+      { id: "c3", label: "Stop social media efforts entirely", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Analyze what content performed best and adjust strategy — data-driven adjustment improves results over guesswork.",
+  },
+  {
+    id: "s17",
+    prompt: "A major client wants a custom order outside your usual product line. What do you do?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Assess feasibility and profitability before committing", points: 3 },
+      { id: "c2", label: "Accept immediately to keep the client happy", points: 1 },
+      { id: "c3", label: "Decline without evaluating the opportunity", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Assess feasibility and profitability before committing — avoids overextending resources on a bad deal.",
+  },
+  {
+    id: "s18",
+    prompt: "Your business page gets a negative public review. How do you respond?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Reply professionally and offer to resolve the issue", points: 3 },
+      { id: "c2", label: "Delete or ignore the review", points: 1 },
+      { id: "c3", label: "Argue with the customer publicly", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Reply professionally and offer to resolve the issue — protects reputation and shows accountability.",
+  },
+  {
+    id: "s19",
+    prompt: "You're deciding whether to rent a bigger space as your business grows. What's your best approach?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Analyze projected revenue against added rent cost", points: 3 },
+      { id: "c2", label: "Move immediately to avoid missing growth", points: 1 },
+      { id: "c3", label: "Stay in the current space indefinitely", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Analyze projected revenue against added rent cost — ensures growth is financially sustainable.",
+  },
+  {
+    id: "s20",
+    prompt: "A staff member consistently arrives late but is otherwise a strong performer. What's your best move?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Have a private conversation to understand and address the issue", points: 3 },
+      { id: "c2", label: "Ignore it since their work is good", points: 1 },
+      { id: "c3", label: "Terminate them immediately", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Have a private conversation to understand and address the issue — fair and preserves a valuable employee.",
+  },
+  {
+    id: "s21",
+    prompt: "You have extra capital and are deciding where to invest it. What's the best first priority?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Strengthen your core operations or best-performing product", points: 3 },
+      { id: "c2", label: "Diversify into an unrelated venture immediately", points: 1 },
+      { id: "c3", label: "Save it without a clear plan", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Strengthen your core operations or best-performing product — compounds existing strengths before diversifying.",
+  },
+  {
+    id: "s22",
+    prompt: "Your delivery costs are eating into your profit margin. What's your best solution?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Negotiate better rates or set a minimum order for free delivery", points: 3 },
+      { id: "c2", label: "Absorb the cost to stay competitive", points: 1 },
+      { id: "c3", label: "Stop offering delivery entirely", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Negotiate better rates or set a minimum order for free delivery — protects margins without losing customers.",
+  },
+  {
+    id: "s23",
+    prompt: "A supplier you've worked with for years starts delivering lower-quality materials. What's your best step?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Raise the issue directly and request improvement or alternatives", points: 3 },
+      { id: "c2", label: "Continue as usual to preserve the relationship", points: 1 },
+      { id: "c3", label: "Switch suppliers immediately without discussion", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Raise the issue directly and request improvement or alternatives — protects quality while respecting the relationship.",
+  },
+  {
+    id: "s24",
+    prompt: "You're launching a new product and unsure how to price it. What's your best approach?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Research competitor pricing and calculate your cost margins", points: 3 },
+      { id: "c2", label: "Price it the same as your other products", points: 1 },
+      { id: "c3", label: "Set the lowest price to attract buyers fast", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Research competitor pricing and calculate your cost margins — ensures pricing is both competitive and profitable.",
+  },
+  {
+    id: "s25",
+    prompt: "Your team is overwhelmed during peak season. What's the best short-term fix?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Hire temporary staff or outsource specific tasks", points: 3 },
+      { id: "c2", label: "Push current staff to work longer hours", points: 1 },
+      { id: "c3", label: "Turn away excess orders", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Hire temporary staff or outsource specific tasks — meets demand without burning out your core team.",
+  },
+  {
+    id: "s26",
+    prompt: "A long-time customer hasn't purchased in months. What's your best re-engagement move?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Send a personalized offer or check-in message", points: 3 },
+      { id: "c2", label: "Wait for them to return on their own", points: 1 },
+      { id: "c3", label: "Remove them from your customer list", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Send a personalized offer or check-in message — proactive outreach often revives dormant customers.",
   },
 ];
+
+function cloneActivityScenarios(): ActivityScenario[] {
+  return DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({
+    ...s,
+    choices: s.choices?.map((c) => ({ ...c })),
+    keywords: s.keywords ? [...s.keywords] : undefined,
+  }));
+}
+
+function shouldUpgradeActivityScenarios(scenarios: ActivityScenario[] | undefined): boolean {
+  if (!scenarios?.length) return true;
+  if (scenarios.some((s) => s.type === "text")) return true;
+  if (scenarios.length < DEFAULT_ACTIVITY_SCENARIOS.length) return true;
+  return !DEFAULT_ACTIVITY_SCENARIOS.every((d) => scenarios.some((s) => s.id === d.id));
+}
+
+function resolveActivityScenarios(stored: ActivityScenario[] | undefined): ActivityScenario[] {
+  try {
+    const version = Number(window.localStorage.getItem(ACTIVITY_SCENARIOS_VERSION_KEY) ?? "1");
+    if (version < ACTIVITY_SCENARIOS_VERSION || shouldUpgradeActivityScenarios(stored)) {
+      window.localStorage.setItem(ACTIVITY_SCENARIOS_VERSION_KEY, String(ACTIVITY_SCENARIOS_VERSION));
+      return cloneActivityScenarios();
+    }
+  } catch {
+    /* ignore storage errors */
+  }
+  return stored?.length ? stored : cloneActivityScenarios();
+}
 
 export interface Db {
   users: User[];
@@ -195,7 +438,7 @@ function seedDb(): Db {
     student_progress: SEED_PROGRESS,
     session_user_id: null,
     activity_settings: { ...DEFAULT_ACTIVITY_SETTINGS },
-    activity_scenarios: DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({ ...s })),
+    activity_scenarios: cloneActivityScenarios(),
   };
 }
 
@@ -245,6 +488,7 @@ interface StoreValue {
   saveActivitySettings: (settings: ActivitySettings) => void;
   saveActivityScenario: (scenario: ActivityScenario) => void;
   deleteActivityScenario: (id: string) => void;
+  resetActivityScenarios: () => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -264,12 +508,24 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
             ...supabaseDb,
             session_user_id: prev.session_user_id,
             activity_settings: supabaseDb.activity_settings ?? prev.activity_settings ?? { ...DEFAULT_ACTIVITY_SETTINGS },
-            activity_scenarios: supabaseDb.activity_scenarios ?? prev.activity_scenarios ?? DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({ ...s })),
+            activity_scenarios: resolveActivityScenarios(supabaseDb.activity_scenarios ?? prev.activity_scenarios),
           }));
         } else if (!cancelled) {
           try {
             const raw = window.localStorage.getItem(STORAGE_KEY);
-            if (raw) setDb({ ...seedDb(), ...(JSON.parse(raw) as Db) });
+            if (raw) {
+              const parsed = JSON.parse(raw) as Db;
+              setDb({
+                ...seedDb(),
+                ...parsed,
+                activity_scenarios: resolveActivityScenarios(parsed.activity_scenarios),
+              });
+            } else {
+              setDb((prev) => ({
+                ...prev,
+                activity_scenarios: resolveActivityScenarios(prev.activity_scenarios),
+              }));
+            }
           } catch {
             /* ignore corrupt storage */
           }
@@ -329,7 +585,7 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
             ...supabaseDb,
             session_user_id: prev.session_user_id,
             activity_settings: supabaseDb.activity_settings ?? prev.activity_settings ?? { ...DEFAULT_ACTIVITY_SETTINGS },
-            activity_scenarios: supabaseDb.activity_scenarios ?? prev.activity_scenarios ?? DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({ ...s })),
+            activity_scenarios: resolveActivityScenarios(supabaseDb.activity_scenarios ?? prev.activity_scenarios),
           }));
         }
       } catch {
@@ -801,6 +1057,15 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const resetActivityScenarios = useCallback(() => {
+    try {
+      window.localStorage.setItem(ACTIVITY_SCENARIOS_VERSION_KEY, String(ACTIVITY_SCENARIOS_VERSION));
+    } catch {
+      /* ignore storage errors */
+    }
+    setDb((prev) => ({ ...prev, activity_scenarios: cloneActivityScenarios() }));
+  }, []);
+
   const updateProfile = useCallback(
     (updates: { full_name?: string; email?: string; username?: string; avatar_url?: string }) => {
       setDb((prev) => {
@@ -897,6 +1162,7 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     saveActivitySettings,
     saveActivityScenario,
     deleteActivityScenario,
+    resetActivityScenarios,
   };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

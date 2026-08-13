@@ -18,6 +18,11 @@ export const LEVELS: Level[] = [
   { level: 3, title: "Aspiring Entrepreneur", min_xp: 350 },
   { level: 4, title: "Business Builder", min_xp: 600 },
   { level: 5, title: "Future Entrepreneur", min_xp: 900 },
+  { level: 6, title: "Venture Pioneer", min_xp: 1250 },
+  { level: 7, title: "Business Strategist", min_xp: 1650 },
+  { level: 8, title: "Industry Innovator", min_xp: 2100 },
+  { level: 9, title: "Master Entrepreneur", min_xp: 2600 },
+  { level: 10, title: "Visionary Founder", min_xp: 3150 },
 ];
 
 export const XP_RULES = {
