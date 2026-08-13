@@ -120,7 +120,7 @@ function LoginPage() {
         
 
         <p className="mt-4 text-center text-sm">
-          <Link to="/admin-login" className="text-white/80 hover:text-white hover:underline">
+          <Link to="/admin-login" className="text-white/40 hover:text-white/60 text-xs">
             Administrator login
           </Link>
         </p>

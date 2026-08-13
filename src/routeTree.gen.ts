@@ -18,6 +18,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminBadgesRouteImport } from './routes/admin.badges'
+import { Route as AdminProfileRouteImport } from './routes/admin.profile'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminStoriesRouteImport } from './routes/admin.stories'
@@ -71,6 +72,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminBadgesRoute = AdminBadgesRouteImport.update({
   id: '/admin/badges',
   path: '/admin/badges',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProfileRoute = AdminProfileRouteImport.update({
+  id: '/admin/profile',
+  path: '/admin/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
@@ -128,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/admin/badges': typeof AdminBadgesRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/stories': typeof AdminStoriesRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/admin/badges': typeof AdminBadgesRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/stories': typeof AdminStoriesRoute
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/admin/badges': typeof AdminBadgesRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/stories': typeof AdminStoriesRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/register'
     | '/admin/badges'
+    | '/admin/profile'
     | '/admin/questions'
     | '/admin/reports'
     | '/admin/stories'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/register'
     | '/admin/badges'
+    | '/admin/profile'
     | '/admin/questions'
     | '/admin/reports'
     | '/admin/stories'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/register'
     | '/admin/badges'
+    | '/admin/profile'
     | '/admin/questions'
     | '/admin/reports'
     | '/admin/stories'
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   AdminBadgesRoute: typeof AdminBadgesRoute
+  AdminProfileRoute: typeof AdminProfileRoute
   AdminQuestionsRoute: typeof AdminQuestionsRoute
   AdminReportsRoute: typeof AdminReportsRoute
   AdminStoriesRoute: typeof AdminStoriesRoute
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBadgesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/admin/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/questions': {
       id: '/admin/questions'
       path: '/admin/questions'
@@ -404,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   AdminBadgesRoute: AdminBadgesRoute,
+  AdminProfileRoute: AdminProfileRoute,
   AdminQuestionsRoute: AdminQuestionsRoute,
   AdminReportsRoute: AdminReportsRoute,
   AdminStoriesRoute: AdminStoriesRoute,

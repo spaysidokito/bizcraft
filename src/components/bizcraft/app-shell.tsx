@@ -55,6 +55,7 @@ const adminNav = [
   { to: "/admin/questions", label: "Quiz Questions", icon: ClipboardList },
   { to: "/admin/badges", label: "Badges", icon: Award },
   { to: "/admin/reports", label: "Reports", icon: Medal },
+  { to: "/admin/profile", label: "Profile", icon: UserIcon },
 ] as const;
 
 interface AppShellProps {
@@ -119,7 +120,10 @@ export function AppShell({ role, title, subtitle, actions, children }: AppShellP
         </div>
 
         <div className="border-b border-border px-4 py-4">
-          <div className="flex items-center gap-3">
+          <Link
+            to={role === "admin" ? "/admin/profile" : "/profile"}
+            className="flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors hover:bg-muted"
+          >
             <img
               src={
                 profile?.avatar_url ??
@@ -134,7 +138,7 @@ export function AppShell({ role, title, subtitle, actions, children }: AppShellP
                 {role === "admin" ? "Administrator" : `${level.title} · Level ${level.level}`}
               </p>
             </div>
-          </div>
+          </Link>
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
