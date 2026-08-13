@@ -21,9 +21,9 @@ export const Route = createFileRoute("/admin/reports")({
 
 function AdminReports() {
   const { db, resetDemoData } = useBizCraft();
-  const attempts = [...db.quiz_attempts].sort((a, b) =>
-    b.completed_at.localeCompare(a.completed_at),
-  );
+  const attempts = [...db.quiz_attempts]
+    .filter((a) => db.users.find((u) => u.id === a.student_id)?.role === "student")
+    .sort((a, b) => b.completed_at.localeCompare(a.completed_at));
 
   return (
     <AppShell

@@ -29,6 +29,8 @@ import type {
   StudentProgress,
   User,
 } from "./types";
+import { loadDbFromSupabase, saveDbToSupabase, getSupabaseClient } from "./supabase";
+import bcrypt from "bcryptjs";
 
 /**
  * In-memory database mirroring the intended relational schema.
@@ -48,6 +50,7 @@ export interface Db {
 }
 
 const STORAGE_KEY = "bizcraft.db.v1";
+const SESSION_STORAGE_KEY = "bizcraft.session_user_id";
 
 function seedDb(): Db {
   return {
@@ -100,6 +103,8 @@ interface StoreValue {
   deleteQuestion: (id: string) => void;
   saveBadge: (badge: Badge) => void;
   deleteBadge: (id: string) => void;
+  saveStudent: (student: User, profile: StudentProfile) => void;
+  deleteStudent: (id: string) => void;
   resetDemoData: () => void;
 }
 
@@ -110,23 +115,86 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setDb({ ...seedDb(), ...(JSON.parse(raw) as Db) });
-    } catch {
-      /* ignore corrupt storage */
-    }
-    setReady(true);
+    let cancelled = false;
+
+    const hydrate = async () => {
+      try {
+        const supabaseDb = await loadDbFromSupabase();
+        if (!cancelled && supabaseDb) {
+          setDb((prev) => ({ ...supabaseDb, session_user_id: prev.session_user_id }));
+        } else if (!cancelled) {
+          try {
+            const raw = window.localStorage.getItem(STORAGE_KEY);
+            if (raw) setDb({ ...seedDb(), ...(JSON.parse(raw) as Db) });
+          } catch {
+            /* ignore corrupt storage */
+          }
+        }
+
+        if (!cancelled) {
+          const savedSession = window.localStorage.getItem(SESSION_STORAGE_KEY);
+          if (savedSession) {
+            setDb((prev) => ({ ...prev, session_user_id: savedSession }));
+          }
+        }
+      } catch {
+        /* ignore backend errors, fall back to local demo */
+      } finally {
+        if (!cancelled) setReady(true);
+      }
+    };
+
+    void hydrate();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
     if (!ready) return;
+    void saveDbToSupabase(db).catch(() => {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      } catch {
+        /* ignore quota errors */
+      }
+    });
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      if (db.session_user_id) {
+        window.localStorage.setItem(SESSION_STORAGE_KEY, db.session_user_id);
+      } else {
+        window.localStorage.removeItem(SESSION_STORAGE_KEY);
+      }
     } catch {
       /* ignore quota errors */
     }
   }, [db, ready]);
+
+  // Poll Supabase periodically to pick up remote changes from other clients/deployments
+  useEffect(() => {
+    if (!ready) return;
+    const client = getSupabaseClient();
+    if (!client) return;
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const supabaseDb = await loadDbFromSupabase();
+        if (!cancelled && supabaseDb) {
+          setDb((prev) => ({ ...supabaseDb, session_user_id: prev.session_user_id }));
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+    // run immediately then every 5s
+    void poll();
+    const id = setInterval(poll, 5000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [ready]);
 
   const currentUser = useMemo(
     () => db.users.find((u) => u.id === db.session_user_id) ?? null,
@@ -143,10 +211,58 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
       const user = db.users.find(
         (u) => u.email.toLowerCase() === id || u.username.toLowerCase() === id,
       );
-      if (!user || user.password !== password) {
+      if (!user) return { ok: false, error: "Incorrect email/username or password." };
+
+      // Password verification: support bcrypt-hashed passwords and legacy plaintext.
+      let passwordMatches = false;
+      try {
+        if (typeof user.password === "string" && user.password.startsWith("$2")) {
+          passwordMatches = bcrypt.compareSync(password, user.password);
+        } else {
+          // Legacy plaintext match — if correct, re-hash and persist the hashed password.
+          passwordMatches = user.password === password;
+          if (passwordMatches) {
+            const hashed = bcrypt.hashSync(password, 10);
+            const updated: User = { ...user, password: hashed };
+            // Update local DB immediately
+            setDb((prev) => ({
+              ...prev,
+              users: prev.users.map((u) => (u.id === updated.id ? updated : u)),
+            }));
+            // Persist to Supabase if available
+            const client = getSupabaseClient();
+            if (client) {
+              void client.from("users").upsert([updated], { onConflict: "id" }).catch(() => {});
+            }
+          }
+        }
+      } catch {
+        passwordMatches = false;
+      }
+
+      if (!passwordMatches) {
         return { ok: false, error: "Incorrect email/username or password." };
       }
-      setDb((prev) => ({ ...prev, session_user_id: user.id }));
+
+      setDb((prev) => {
+        const hasProfile = prev.student_profiles.some((p) => p.user_id === user.id);
+        return {
+          ...prev,
+          session_user_id: user.id,
+          student_profiles: hasProfile
+            ? prev.student_profiles
+            : [
+                ...prev.student_profiles,
+                {
+                  user_id: user.id,
+                  grade_level: "",
+                  section: "",
+                  xp: 0,
+                  avatar_url: null,
+                },
+              ],
+        };
+      });
       return { ok: true, role: user.role };
     },
     [db.users],
@@ -161,17 +277,18 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
       );
       if (exists) return { ok: false, error: "That email or username is already registered." };
       const id = `u-${Date.now()}`;
+      const hashed = bcrypt.hashSync(input.password, 10);
       const user: User = {
         id,
         full_name: input.full_name.trim(),
         email: input.email.trim(),
         username: input.username.trim(),
-        password: input.password,
+        password: hashed,
         role: "student",
       };
       const newProfile: StudentProfile = {
         user_id: id,
-        grade_level: input.grade_level ?? "Grade 11",
+        grade_level: input.grade_level?.trim() ?? "",
         section: input.section?.trim() ?? "",
         xp: 0,
         avatar_url: null,
@@ -182,6 +299,13 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
         student_profiles: [...prev.student_profiles, newProfile],
         session_user_id: id,
       }));
+
+      // Persist new user to Supabase immediately if available
+      const client = getSupabaseClient();
+      if (client) {
+        void client.from("users").upsert([user], { onConflict: "id" }).catch(() => {});
+        void client.from("student_profiles").upsert([newProfile], { onConflict: "user_id" }).catch(() => {});
+      }
       return { ok: true };
     },
     [db.users],
@@ -433,6 +557,59 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const saveStudent = useCallback((student: User, profile: StudentProfile) => {
+    setDb((prev) => ({
+      ...prev,
+      users: prev.users.some((u) => u.id === student.id)
+        ? prev.users.map((u) => (u.id === student.id ? student : u))
+        : [...prev.users, student],
+      student_profiles: prev.student_profiles.some((p) => p.user_id === student.id)
+        ? prev.student_profiles.map((p) => (p.user_id === student.id ? profile : p))
+        : [...prev.student_profiles, profile],
+    }));
+
+    const client = getSupabaseClient();
+    if (client) {
+      void (async () => {
+        try {
+          await client.from("users").upsert([student], { onConflict: "id" });
+          await client
+            .from("student_profiles")
+            .upsert([profile], { onConflict: "user_id" });
+        } catch {
+          /* ignore remote errors */
+        }
+      })();
+    }
+  }, []);
+
+  const deleteStudent = useCallback((id: string) => {
+    setDb((prev) => ({
+      ...prev,
+      users: prev.users.filter((u) => u.id !== id),
+      student_profiles: prev.student_profiles.filter((p) => p.user_id !== id),
+      quiz_attempts: prev.quiz_attempts.filter((a) => a.student_id !== id),
+      student_progress: prev.student_progress.filter((p) => p.student_id !== id),
+      student_badges: prev.student_badges.filter((sb) => sb.student_id !== id),
+      session_user_id: prev.session_user_id === id ? null : prev.session_user_id,
+    }));
+
+    const client = getSupabaseClient();
+    if (client) {
+      void (async () => {
+        try {
+          await client.from("student_badges").delete().eq("student_id", id);
+          await client.from("student_progress").delete().eq("student_id", id);
+          await client.from("quiz_attempts").delete().eq("student_id", id);
+          await client.from("student_profiles").delete().eq("user_id", id);
+          await client.from("users").delete().eq("id", id);
+        } catch {
+          /* ignore */
+        }
+      })();
+    }
+  }, []);
+
   const resetDemoData = useCallback(() => {
     const fresh = seedDb();
     setDb(fresh);
@@ -459,6 +636,8 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     deleteQuestion,
     saveBadge,
     deleteBadge,
+    saveStudent,
+    deleteStudent,
     resetDemoData,
   };
 

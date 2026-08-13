@@ -20,7 +20,7 @@ export interface User {
 
 export interface StudentProfile {
   user_id: string;
-  grade_level: "Grade 11" | "Grade 12";
+  grade_level: string;
   section: string;
   xp: number;
   avatar_url: string | null;

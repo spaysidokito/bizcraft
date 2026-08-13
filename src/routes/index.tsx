@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useBizCraft } from "@/lib/bizcraft/store";
 import { BizCraftLogo } from "@/components/bizcraft/app-shell";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ function LoginPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-10">
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
-          <BizCraftLogo />
+          <BizCraftLogo className="h-36" />
           <h1 className="mt-4 font-display text-2xl font-bold">Welcome to BizCraft</h1>
         </div>
 
@@ -73,15 +75,26 @@ function LoginPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              autoComplete="current-password"
-              required
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                autoComplete="current-password"
+                required
+                className="pr-10"
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword((s) => !s)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+              >
+                {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -95,26 +108,14 @@ function LoginPage() {
           </Button>
 
           <div className="flex items-center justify-between text-sm">
-            <Link to="/forgot-password" className="text-primary hover:underline">
-              Forgot password?
-            </Link>
+            <div />
             <Link to="/register" className="text-muted-foreground hover:underline">
               Create an account
             </Link>
           </div>
         </form>
 
-        <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/50 p-4 text-sm">
-          <p className="font-semibold">Demo accounts</p>
-          <p className="mt-1 text-muted-foreground">
-            Learner: <span className="font-mono">andrea</span> /{" "}
-            <span className="font-mono">student123</span>
-          </p>
-          <p className="text-muted-foreground">
-            Admin: <span className="font-mono">admin</span> /{" "}
-            <span className="font-mono">admin123</span>
-          </p>
-        </div>
+        
 
         <p className="mt-4 text-center text-sm">
           <Link to="/admin-login" className="text-muted-foreground hover:underline">

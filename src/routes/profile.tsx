@@ -12,7 +12,7 @@ export const Route = createFileRoute("/profile")({
       {
         name: "description",
         content:
-          "Your BizCraft profile: grade level, section, entrepreneur level, XP, quiz averages and badges.",
+          "Your BizCraft profile: entrepreneur level, XP, quiz averages and badges.",
       },
       { property: "og:title", content: "Student Profile — BizCraft" },
       { property: "og:description", content: "Your BizCraft learning profile." },
@@ -42,9 +42,6 @@ function ProfilePage() {
           </span>
           <div>
             <h2 className="font-display text-xl font-semibold">{currentUser.full_name}</h2>
-            <p className="text-sm text-muted-foreground">
-              {profile.grade_level} · {profile.section}
-            </p>
             <p className="text-sm text-muted-foreground">{currentUser.email}</p>
             <p className="mt-1 text-sm font-medium text-primary">
               Level {level.level} — {level.title}

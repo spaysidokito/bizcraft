@@ -13,21 +13,28 @@ import {
   Users,
   X,
 } from "lucide-react";
-import logoAsset from "@/assets/bizcraft-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 import { useBizCraft } from "@/lib/bizcraft/store";
 import { levelForXp } from "@/lib/bizcraft/data";
 import { Button } from "@/components/ui/button";
 
-export function BizCraftLogo({ compact = false }: { compact?: boolean }) {
+const logoSrc = "/bizcraftlogo.png";
+
+export function BizCraftLogo({
+  compact = false,
+  className,
+}: {
+  compact?: boolean;
+  className?: string;
+}) {
   return (
     <span className="flex items-center">
       <img
-        src={logoAsset.url}
+        src={logoSrc}
         alt="BizCraft — Learn, Play, Grow"
         width={512}
         height={341}
-        className={cn("w-auto object-contain", compact ? "h-8" : "h-10")}
+        className={cn("w-auto object-contain", compact ? "h-12" : "h-16", className)}
       />
     </span>
   );
