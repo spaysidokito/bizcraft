@@ -18,6 +18,8 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminActivityQuestionsRouteImport } from './routes/admin.activity-questions'
+import { Route as AdminActivitySettingsRouteImport } from './routes/admin.activity-settings'
 import { Route as AdminBadgesRouteImport } from './routes/admin.badges'
 import { Route as AdminProfileRouteImport } from './routes/admin.profile'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
@@ -73,6 +75,16 @@ const RegisterRoute = RegisterRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminActivityQuestionsRoute = AdminActivityQuestionsRouteImport.update({
+  id: '/admin/activity-questions',
+  path: '/admin/activity-questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminActivitySettingsRoute = AdminActivitySettingsRouteImport.update({
+  id: '/admin/activity-settings',
+  path: '/admin/activity-settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBadgesRoute = AdminBadgesRouteImport.update({
@@ -140,6 +152,8 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/activity-questions': typeof AdminActivityQuestionsRoute
+  '/admin/activity-settings': typeof AdminActivitySettingsRoute
   '/admin/badges': typeof AdminBadgesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/questions': typeof AdminQuestionsRoute
@@ -162,6 +176,8 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/activity-questions': typeof AdminActivityQuestionsRoute
+  '/admin/activity-settings': typeof AdminActivitySettingsRoute
   '/admin/badges': typeof AdminBadgesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/questions': typeof AdminQuestionsRoute
@@ -185,6 +201,8 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/admin/activity-questions': typeof AdminActivityQuestionsRoute
+  '/admin/activity-settings': typeof AdminActivitySettingsRoute
   '/admin/badges': typeof AdminBadgesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/questions': typeof AdminQuestionsRoute
@@ -209,6 +227,8 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/activity-questions'
+    | '/admin/activity-settings'
     | '/admin/badges'
     | '/admin/profile'
     | '/admin/questions'
@@ -231,6 +251,8 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/activity-questions'
+    | '/admin/activity-settings'
     | '/admin/badges'
     | '/admin/profile'
     | '/admin/questions'
@@ -253,6 +275,8 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/profile'
     | '/register'
+    | '/admin/activity-questions'
+    | '/admin/activity-settings'
     | '/admin/badges'
     | '/admin/profile'
     | '/admin/questions'
@@ -276,6 +300,8 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  AdminActivityQuestionsRoute: typeof AdminActivityQuestionsRoute
+  AdminActivitySettingsRoute: typeof AdminActivitySettingsRoute
   AdminBadgesRoute: typeof AdminBadgesRoute
   AdminProfileRoute: typeof AdminProfileRoute
   AdminQuestionsRoute: typeof AdminQuestionsRoute
@@ -353,6 +379,20 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/activity-questions': {
+      id: '/admin/activity-questions'
+      path: '/admin/activity-questions'
+      fullPath: '/admin/activity-questions'
+      preLoaderRoute: typeof AdminActivityQuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/activity-settings': {
+      id: '/admin/activity-settings'
+      path: '/admin/activity-settings'
+      fullPath: '/admin/activity-settings'
+      preLoaderRoute: typeof AdminActivitySettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/badges': {
@@ -444,6 +484,8 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  AdminActivityQuestionsRoute: AdminActivityQuestionsRoute,
+  AdminActivitySettingsRoute: AdminActivitySettingsRoute,
   AdminBadgesRoute: AdminBadgesRoute,
   AdminProfileRoute: AdminProfileRoute,
   AdminQuestionsRoute: AdminQuestionsRoute,

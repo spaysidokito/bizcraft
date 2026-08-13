@@ -8,6 +8,7 @@ import {
   LogOut,
   Medal,
   Menu,
+  Settings2,
   Target,
   User as UserIcon,
   Users,
@@ -55,6 +56,7 @@ const adminNav = [
   { to: "/admin/questions", label: "Quiz Questions", icon: ClipboardList },
   { to: "/admin/badges", label: "Badges", icon: Award },
   { to: "/admin/reports", label: "Reports", icon: Medal },
+  { to: "/admin/activity-settings", label: "Activity Settings", icon: Settings2 },
   { to: "/admin/profile", label: "Profile", icon: UserIcon },
 ] as const;
 

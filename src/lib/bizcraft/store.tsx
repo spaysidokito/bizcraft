@@ -37,6 +37,135 @@ import bcrypt from "bcryptjs";
  * Swap `useState` + localStorage for real API/database calls later —
  * the shape of `Db` matches the planned tables one-to-one.
  */
+export interface ActivityScenarioChoice {
+  id: string;
+  label: string;
+  points: number;
+}
+
+export interface ActivityScenario {
+  id: string;
+  prompt: string;
+  type: "mc" | "text";
+  choices?: ActivityScenarioChoice[];
+  keywords?: string[];
+  bestChoiceId?: string;
+  explanation?: string;
+}
+
+export interface ActivitySettings {
+  countdownSeconds: number; // 3–30
+  autoAdvance: boolean;     // when false, only the manual "Next now" button works
+}
+
+export const DEFAULT_ACTIVITY_SETTINGS: ActivitySettings = {
+  countdownSeconds: 5,
+  autoAdvance: true,
+};
+
+export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
+  {
+    id: "s1",
+    prompt: "Your supplier delivers late and you risk losing customers. What do you do?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Find an alternate supplier quickly", points: 3 },
+      { id: "c2", label: "Contact supplier and negotiate faster delivery", points: 2 },
+      { id: "c3", label: "Absorb delay and wait", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Finding an alternate supplier or having a backup reduces risk and keeps customers satisfied.",
+  },
+  {
+    id: "s2",
+    prompt: "A customer complains about product quality. How do you respond?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Offer refund/replace and investigate", points: 3 },
+      { id: "c2", label: "Explain policy and decline", points: 0 },
+      { id: "c3", label: "Apologize and ask for more details", points: 2 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Offering refund/replace prioritizes customer trust and helps you find the root cause.",
+  },
+  {
+    id: "s3",
+    prompt: "Describe briefly how you'd market a small food stall on a budget (one or two sentences).",
+    type: "text",
+    keywords: ["social", "facebook", "tiktok", "flyer", "word of mouth", "promo"],
+    explanation: "Low-cost channels like social media, local promos, and word-of-mouth work well for small food stalls.",
+  },
+  {
+    id: "s4",
+    prompt: "You have leftover inventory that isn't selling. Which option increases cashflow fastest?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Run a limited-time discount/promo", points: 3 },
+      { id: "c2", label: "Bundle with other products", points: 2 },
+      { id: "c3", label: "Keep price and wait for demand", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Discounts and promos can quickly convert inventory to cash while freeing storage space.",
+  },
+  {
+    id: "s5",
+    prompt: "A supplier offers a bulk discount but requires larger upfront payment. What do you consider?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Calculate cashflow and accept if affordable", points: 3 },
+      { id: "c2", label: "Always accept for lower unit cost", points: 1 },
+      { id: "c3", label: "Decline to avoid cash strain", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Lower unit cost is good, but only if your cashflow can handle the larger upfront payment.",
+  },
+  {
+    id: "s6",
+    prompt: "You're hiring your first assistant. List one quality or question you'd focus on (one sentence).",
+    type: "text",
+    keywords: ["reliable", "honest", "experience", "availability", "skill", "attitude"],
+    explanation: "Look for reliability and attitude; these predict long-term fit more than perfect experience.",
+  },
+  {
+    id: "s7",
+    prompt: "A sudden cash shortage means you must prioritize payments. Which do you pay first?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Salaries and critical suppliers", points: 3 },
+      { id: "c2", label: "Rent and utilities only", points: 2 },
+      { id: "c3", label: "Delay all non-essential bills", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Paying salaries and critical suppliers keeps operations running and protects relationships.",
+  },
+  {
+    id: "s8",
+    prompt: "You want to expand online. Briefly name one digital channel you'll start with and why.",
+    type: "text",
+    keywords: ["facebook", "tiktok", "instagram", "lazada", "shopee", "website"],
+    explanation: "Start with one channel where your customers already are; test, then expand.",
+  },
+  {
+    id: "s9",
+    prompt: "A competitor drops price aggressively. What strategic move protects your business?",
+    type: "mc",
+    choices: [
+      { id: "c1", label: "Differentiate with service/quality", points: 3 },
+      { id: "c2", label: "Match price immediately", points: 1 },
+      { id: "c3", label: "Ignore and maintain position", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Differentiation avoids price wars and preserves margins when you compete on value.",
+  },
+  {
+    id: "s10",
+    prompt: "Describe one low-cost way to get repeat customers for a small retail business.",
+    type: "text",
+    keywords: ["loyalty", "discount", "membership", "follow up", "promo", "bundle"],
+    explanation: "Simple loyalty programs, follow-ups, and small discounts encourage repeat purchases.",
+  },
+];
+
 export interface Db {
   users: User[];
   student_profiles: StudentProfile[];
@@ -47,6 +176,8 @@ export interface Db {
   student_badges: StudentBadge[];
   student_progress: StudentProgress[];
   session_user_id: string | null;
+  activity_settings: ActivitySettings;
+  activity_scenarios: ActivityScenario[];
 }
 
 const STORAGE_KEY = "bizcraft.db.v1";
@@ -63,6 +194,8 @@ function seedDb(): Db {
     student_badges: SEED_STUDENT_BADGES,
     student_progress: SEED_PROGRESS,
     session_user_id: null,
+    activity_settings: { ...DEFAULT_ACTIVITY_SETTINGS },
+    activity_scenarios: DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({ ...s })),
   };
 }
 
@@ -108,6 +241,10 @@ interface StoreValue {
   updateProfile: (updates: { full_name?: string; email?: string; username?: string; avatar_url?: string }) => void;
   resetDemoData: () => void;
   awardXp: (xp: number) => void;
+  awardBadge: (badgeId: string) => void;
+  saveActivitySettings: (settings: ActivitySettings) => void;
+  saveActivityScenario: (scenario: ActivityScenario) => void;
+  deleteActivityScenario: (id: string) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -123,7 +260,12 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
       try {
         const supabaseDb = await loadDbFromSupabase();
         if (!cancelled && supabaseDb) {
-          setDb((prev) => ({ ...supabaseDb, session_user_id: prev.session_user_id }));
+          setDb((prev) => ({
+            ...supabaseDb,
+            session_user_id: prev.session_user_id,
+            activity_settings: supabaseDb.activity_settings ?? prev.activity_settings ?? { ...DEFAULT_ACTIVITY_SETTINGS },
+            activity_scenarios: supabaseDb.activity_scenarios ?? prev.activity_scenarios ?? DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({ ...s })),
+          }));
         } else if (!cancelled) {
           try {
             const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -183,7 +325,12 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
       try {
         const supabaseDb = await loadDbFromSupabase();
         if (!cancelled && supabaseDb) {
-          setDb((prev) => ({ ...supabaseDb, session_user_id: prev.session_user_id }));
+          setDb((prev) => ({
+            ...supabaseDb,
+            session_user_id: prev.session_user_id,
+            activity_settings: supabaseDb.activity_settings ?? prev.activity_settings ?? { ...DEFAULT_ACTIVITY_SETTINGS },
+            activity_scenarios: supabaseDb.activity_scenarios ?? prev.activity_scenarios ?? DEFAULT_ACTIVITY_SCENARIOS.map((s) => ({ ...s })),
+          }));
         }
       } catch {
         /* ignore */
@@ -234,7 +381,13 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
             // Persist to Supabase if available
             const client = getSupabaseClient();
             if (client) {
-              void client.from("users").upsert([updated], { onConflict: "id" }).catch(() => {});
+              void (async () => {
+                try {
+                  await client.from("users").upsert([updated], { onConflict: "id" });
+                } catch {
+                  /* ignore remote errors */
+                }
+              })();
             }
           }
         }
@@ -305,8 +458,16 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
       // Persist new user to Supabase immediately if available
       const client = getSupabaseClient();
       if (client) {
-        void client.from("users").upsert([user], { onConflict: "id" }).catch(() => {});
-        void client.from("student_profiles").upsert([newProfile], { onConflict: "user_id" }).catch(() => {});
+        void (async () => {
+          try {
+            await client.from("users").upsert([user], { onConflict: "id" });
+          } catch {}
+        })();
+        void (async () => {
+          try {
+            await client.from("student_profiles").upsert([newProfile], { onConflict: "user_id" });
+          } catch {}
+        })();
       }
       return { ok: true };
     },
@@ -617,6 +778,29 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     setDb(fresh);
   }, []);
 
+  const saveActivitySettings = useCallback((settings: ActivitySettings) => {
+    setDb((prev) => ({ ...prev, activity_settings: { ...settings } }));
+  }, []);
+
+  const saveActivityScenario = useCallback((scenario: ActivityScenario) => {
+    setDb((prev) => {
+      const existing = prev.activity_scenarios ?? DEFAULT_ACTIVITY_SCENARIOS;
+      return {
+        ...prev,
+        activity_scenarios: existing.some((s) => s.id === scenario.id)
+          ? existing.map((s) => (s.id === scenario.id ? scenario : s))
+          : [...existing, scenario],
+      };
+    });
+  }, []);
+
+  const deleteActivityScenario = useCallback((id: string) => {
+    setDb((prev) => ({
+      ...prev,
+      activity_scenarios: (prev.activity_scenarios ?? DEFAULT_ACTIVITY_SCENARIOS).filter((s) => s.id !== id),
+    }));
+  }, []);
+
   const updateProfile = useCallback(
     (updates: { full_name?: string; email?: string; username?: string; avatar_url?: string }) => {
       setDb((prev) => {
@@ -658,6 +842,31 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     }));
   }, [db.session_user_id]);
 
+  const awardBadge = useCallback((badgeId: string) => {
+    const sid = db.session_user_id;
+    if (!sid) return;
+    setDb((prev) => {
+      const owned = new Set(prev.student_badges.filter((b) => b.student_id === sid).map((b) => b.badge_id));
+      if (owned.has(badgeId)) return prev;
+      const entry = { student_id: sid, badge_id: badgeId, earned_at: new Date().toISOString() };
+      // persist to Supabase if available
+      const client = getSupabaseClient();
+      if (client) {
+        void (async () => {
+          try {
+            await client.from("student_badges").upsert([entry], { onConflict: ["student_id", "badge_id"] });
+          } catch {
+            /* ignore */
+          }
+        })();
+      }
+      return {
+        ...prev,
+        student_badges: [...prev.student_badges, entry],
+      };
+    });
+  }, [db.session_user_id]);
+
   const value: StoreValue = {
     db,
     ready,
@@ -684,6 +893,10 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     updateProfile,
     resetDemoData,
     awardXp,
+    awardBadge,
+    saveActivitySettings,
+    saveActivityScenario,
+    deleteActivityScenario,
   };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

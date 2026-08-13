@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -39,6 +39,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const [showDetails, setShowDetails] = useState(Boolean(import.meta.env.DEV));
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -68,7 +69,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Go home
           </a>
+          <button
+            onClick={() => setShowDetails((s) => !s)}
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground"
+          >
+            {showDetails ? "Hide details" : "Show details"}
+          </button>
         </div>
+        {showDetails && (
+          <div className="mt-4 max-w-xl mx-auto text-left">
+            <pre className="whitespace-pre-wrap rounded-md bg-surface p-4 text-xs overflow-auto">
+              {String(error?.message)}
+              {error?.stack ? "\n\n" + error.stack : ""}
+            </pre>
+          </div>
+        )}
       </div>
     </div>
   );
