@@ -126,6 +126,21 @@ function DashboardPage() {
 
         <section>
           <SectionHeading
+            title="Try an Interactive Activity"
+            description="Practice real problems and earn XP based on your choices."
+          />
+          <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4 shadow-card">
+            <p className="text-sm text-muted-foreground">Short scenarios help you practice real business decisions.</p>
+            <div className="mt-4">
+              <Button asChild>
+                <Link to="/activity">Start Activity</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <SectionHeading
             title="Entrepreneur Stories"
             description="Real Filipino entrepreneurs and the lessons behind their businesses."
             action={

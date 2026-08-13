@@ -107,6 +107,7 @@ interface StoreValue {
   deleteStudent: (id: string) => void;
   updateProfile: (updates: { full_name?: string; email?: string; username?: string; avatar_url?: string }) => void;
   resetDemoData: () => void;
+  awardXp: (xp: number) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -646,6 +647,17 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const awardXp = useCallback((xp: number) => {
+    const sid = db.session_user_id;
+    if (!sid) return;
+    setDb((prev) => ({
+      ...prev,
+      student_profiles: prev.student_profiles.map((p) =>
+        p.user_id === sid ? { ...p, xp: p.xp + xp } : p,
+      ),
+    }));
+  }, [db.session_user_id]);
+
   const value: StoreValue = {
     db,
     ready,
@@ -671,6 +683,7 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     deleteStudent,
     updateProfile,
     resetDemoData,
+    awardXp,
   };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
