@@ -119,10 +119,22 @@ export function AppShell({ role, title, subtitle, actions, children }: AppShellP
         </div>
 
         <div className="border-b border-border px-4 py-4">
-          <p className="text-sm font-semibold">{currentUser.full_name}</p>
-          <p className="text-xs text-muted-foreground">
-            {role === "admin" ? "Administrator" : `${level.title} · Level ${level.level}`}
-          </p>
+          <div className="flex items-center gap-3">
+            <img
+              src={
+                profile?.avatar_url ??
+                `https://api.dicebear.com/9.x/avataaars/svg?seed=${currentUser.id}&backgroundColor=b6e3f4`
+              }
+              alt={currentUser.full_name}
+              className="size-12 rounded-full border-2 border-primary/20 bg-primary-soft object-cover"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-semibold">{currentUser.full_name}</p>
+              <p className="truncate text-xs text-muted-foreground">
+                {role === "admin" ? "Administrator" : `${level.title} · Level ${level.level}`}
+              </p>
+            </div>
+          </div>
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">

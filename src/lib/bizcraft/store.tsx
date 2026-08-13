@@ -105,6 +105,7 @@ interface StoreValue {
   deleteBadge: (id: string) => void;
   saveStudent: (student: User, profile: StudentProfile) => void;
   deleteStudent: (id: string) => void;
+  updateProfile: (updates: { full_name?: string; email?: string; username?: string; avatar_url?: string }) => void;
   resetDemoData: () => void;
 }
 
@@ -615,6 +616,36 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     setDb(fresh);
   }, []);
 
+  const updateProfile = useCallback(
+    (updates: { full_name?: string; email?: string; username?: string; avatar_url?: string }) => {
+      setDb((prev) => {
+        if (!prev.session_user_id) return prev;
+        return {
+          ...prev,
+          users: prev.users.map((u) =>
+            u.id === prev.session_user_id
+              ? {
+                  ...u,
+                  ...(updates.full_name !== undefined && { full_name: updates.full_name }),
+                  ...(updates.email !== undefined && { email: updates.email }),
+                  ...(updates.username !== undefined && { username: updates.username }),
+                }
+              : u,
+          ),
+          student_profiles: prev.student_profiles.map((p) =>
+            p.user_id === prev.session_user_id
+              ? {
+                  ...p,
+                  ...(updates.avatar_url !== undefined && { avatar_url: updates.avatar_url }),
+                }
+              : p,
+          ),
+        };
+      });
+    },
+    [],
+  );
+
   const value: StoreValue = {
     db,
     ready,
@@ -638,6 +669,7 @@ export function BizCraftProvider({ children }: { children: ReactNode }) {
     deleteBadge,
     saveStudent,
     deleteStudent,
+    updateProfile,
     resetDemoData,
   };
 

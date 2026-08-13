@@ -48,6 +48,24 @@ function DashboardPage() {
       title={`Welcome back, ${currentUser.full_name.split(" ")[0]}!`}
     >
       <div className="space-y-6">
+        {/* Welcome Card with Avatar */}
+        <div className="flex items-center gap-4 rounded-xl border border-border bg-card-story p-6 shadow-card">
+          <img
+            src={
+              profile.avatar_url ??
+              `https://api.dicebear.com/9.x/avataaars/svg?seed=${currentUser.id}&backgroundColor=b6e3f4`
+            }
+            alt={currentUser.full_name}
+            className="size-20 rounded-full border-4 border-white bg-primary-soft shadow-md object-cover"
+          />
+          <div className="min-w-0 flex-1">
+            <h2 className="font-display text-2xl font-bold text-foreground">{currentUser.full_name}</h2>
+            <p className="text-sm text-muted-foreground">
+              Keep learning and growing your entrepreneurial skills!
+            </p>
+          </div>
+        </div>
+
         <LevelPanel xp={profile.xp} />
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
