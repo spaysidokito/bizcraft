@@ -43,7 +43,7 @@ export function BizCraftLogo({
 
 const studentNav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/stories", label: "Entrepreneur Stories", icon: BookOpen },
+  { to: "/stories", label: "Entrepreneurship Hub", icon: BookOpen },
   { to: "/challenges", label: "Challenges", icon: Target },
   { to: "/achievements", label: "Achievements", icon: Medal },
   { to: "/profile", label: "Profile", icon: UserIcon },
@@ -187,21 +187,39 @@ export function AppShell({ role, title, subtitle, actions, children }: AppShellP
 
       {/* Main */}
       <div className="lg:pl-64">
-        <header className="sticky top-0 z-20 flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-surface px-4 py-3 sm:px-6">
+        <header
+          className="sticky top-0 z-20 flex min-h-[4.5rem] items-center gap-3 overflow-hidden px-4 py-3 sm:px-6"
+          style={{
+            background: "linear-gradient(135deg, oklch(0.46 0.22 250) 0%, oklch(0.38 0.20 248) 100%)",
+            borderBottom: "1px solid oklch(1 0 0 / 0.12)",
+          }}
+        >
+          {/* Decorative blobs */}
+          <span className="pointer-events-none absolute -right-6 -top-6 size-28 rounded-full bg-white/5" />
+          <span className="pointer-events-none absolute right-24 top-2 size-8 rounded-full bg-orange/20" style={{ background: "oklch(0.82 0.18 90 / 0.2)" }} />
+
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="lg:hidden shrink-0 text-white/80 hover:bg-white/10 hover:text-white"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
           >
             <Menu className="size-5" />
           </Button>
-          <div className="min-w-0 flex-1">
-            <h1 className="truncate font-display text-lg font-semibold">{title}</h1>
-            {subtitle && <p className="truncate text-sm text-muted-foreground">{subtitle}</p>}
+
+          <div className="relative z-10 min-w-0 flex-1">
+            <h1 className="truncate font-display text-lg font-bold text-white leading-tight">{title}</h1>
+            {subtitle && (
+              <p className="truncate text-sm text-white/65 mt-0.5">{subtitle}</p>
+            )}
           </div>
-          {actions}
+
+          {actions && (
+            <div className="relative z-10 flex shrink-0 items-center gap-2">
+              {actions}
+            </div>
+          )}
         </header>
         <main className="mx-auto max-w-6xl p-4 sm:p-6">{children}</main>
       </div>

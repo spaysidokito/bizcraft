@@ -42,32 +42,118 @@ function DashboardPage() {
     ? stories.find((s) => s.id === lastProgress.story_id)
     : stories[0];
 
+  const quickTiles = [
+    {
+      to: "/stories" as const,
+      label: "Entrepreneurship Hub",
+      sub: "Read inspiring real stories",
+      Icon: BookOpen,
+      iconCls: "bg-primary-soft text-primary",
+      btnCls: "bg-primary text-primary-foreground hover:bg-primary/90",
+    },
+    {
+      to: "/profile" as const,
+      label: "My Progress",
+      sub: "See your journey & achievements",
+      Icon: Flame,
+      iconCls: "bg-orange-soft text-orange",
+      btnCls: "bg-orange text-orange-foreground hover:bg-orange/90",
+    },
+    {
+      to: "/achievements" as const,
+      label: "Achievements",
+      sub: "Collect badges & unlock levels",
+      Icon: Medal,
+      iconCls: "bg-primary-soft text-primary",
+      btnCls: "bg-primary text-primary-foreground hover:bg-primary/90",
+    },
+    {
+      to: "/activity" as const,
+      label: "Activity",
+      sub: "Practice real business decisions",
+      Icon: Target,
+      iconCls: "bg-success-soft text-success",
+      btnCls: "bg-success text-success-foreground hover:bg-success/90",
+    },
+  ];
+
   return (
     <AppShell
       role="student"
       title={`Welcome back, ${currentUser.full_name.split(" ")[0]}!`}
     >
       <div className="space-y-6">
-        {/* Welcome Card with Avatar */}
-        <div className="flex items-center gap-4 rounded-xl border border-border bg-card-story p-6 shadow-card">
-          <img
-            src={
-              profile.avatar_url ??
-              `https://api.dicebear.com/9.x/avataaars/svg?seed=${currentUser.id}&backgroundColor=b6e3f4`
-            }
-            alt={currentUser.full_name}
-            className="size-20 rounded-full border-4 border-white bg-primary-soft shadow-md object-cover"
-          />
-          <div className="min-w-0 flex-1">
-            <h2 className="font-display text-2xl font-bold text-foreground">{currentUser.full_name}</h2>
-            <p className="text-sm text-muted-foreground">
-              Keep learning and growing your entrepreneurial skills!
-            </p>
+
+        {/* ── Hero Banner ─────────────────────────────────────── */}
+        <div className="relative overflow-hidden rounded-2xl bg-primary px-6 py-8 sm:px-10 shadow-card">
+          {/* Subtle decorative blobs */}
+          <span className="pointer-events-none absolute -right-10 -top-10 size-52 rounded-full bg-white/5" />
+          <span className="pointer-events-none absolute -bottom-12 right-8 size-36 rounded-full bg-white/5" />
+          <span className="pointer-events-none absolute right-32 top-5 size-14 rounded-full bg-orange/20" />
+
+          <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            {/* Left: avatar + greeting */}
+            <div className="flex items-center gap-4">
+              <img
+                src={
+                  profile.avatar_url ??
+                  `https://api.dicebear.com/9.x/avataaars/svg?seed=${currentUser.id}&backgroundColor=b6e3f4`
+                }
+                alt={currentUser.full_name}
+                className="size-16 shrink-0 rounded-full border-4 border-white/30 bg-primary-soft object-cover shadow-md"
+              />
+              <div>
+                <p className="text-sm font-medium text-white/70">Good day,</p>
+                <h2 className="font-display text-2xl font-bold text-white leading-tight">
+                  {currentUser.full_name.split(" ")[0]}!
+                </h2>
+                <p className="mt-0.5 text-sm text-white/70">
+                  Small steps today, big dreams tomorrow.
+                </p>
+              </div>
+            </div>
+
+            {/* Right: XP pill + CTA */}
+            <div className="flex flex-col items-start gap-3 sm:items-end">
+              <div className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-semibold text-white">
+                <Flame className="size-4 text-orange" />
+                {stats.xp} XP &nbsp;·&nbsp; {stats.badges.length} Badges
+              </div>
+              <Button
+                asChild
+                className="bg-orange text-orange-foreground hover:bg-orange/90 shadow-md"
+              >
+                <Link to="/stories">Browse Stories →</Link>
+              </Button>
+            </div>
           </div>
         </div>
 
+        {/* ── Level progress bar ───────────────────────────────── */}
         <LevelPanel xp={profile.xp} />
 
+        {/* ── Quick-access tiles ───────────────────────────────── */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {quickTiles.map(({ to, label, sub, Icon, iconCls, btnCls }) => (
+            <div
+              key={to}
+              className="flex flex-col gap-3 rounded-xl border border-border bg-card-story p-4 shadow-card"
+            >
+              <span className={`grid size-10 place-items-center rounded-lg ${iconCls}`}>
+                <Icon className="size-5" />
+              </span>
+              <div className="flex-1">
+                <p className="font-display text-sm font-semibold leading-tight">{label}</p>
+                <p className="mt-1 text-xs text-muted-foreground leading-snug">{sub}</p>
+              </div>
+              <Button asChild size="sm" className={`w-full text-xs ${btnCls}`}>
+                <Link to={to}>View</Link>
+              </Button>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Stats row ────────────────────────────────────────── */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard label="XP Points" value={stats.xp} icon={<Flame className="size-5" />} tone="orange" />
           <StatCard
@@ -90,6 +176,7 @@ function DashboardPage() {
           />
         </div>
 
+        {/* ── Continue Learning ────────────────────────────────── */}
         {continueStory && (
           <section>
             <SectionHeading
@@ -124,24 +211,10 @@ function DashboardPage() {
           </section>
         )}
 
+        {/* ── Entrepreneur Stories grid ─────────────────────────── */}
         <section>
           <SectionHeading
-            title="Try an Interactive Activity"
-            description="Practice real problems and earn XP based on your choices."
-          />
-          <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4 shadow-card">
-            <p className="text-sm text-muted-foreground">Short scenarios help you practice real business decisions.</p>
-            <div className="mt-4">
-              <Button asChild>
-                <Link to="/activity">Start Activity</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <SectionHeading
-            title="Entrepreneur Stories"
+            title="Entrepreneurship Hub"
             description="Real Filipino entrepreneurs and the lessons behind their businesses."
             action={
               <Button variant="outline" size="sm" asChild>
@@ -193,6 +266,7 @@ function DashboardPage() {
             })}
           </div>
         </section>
+
       </div>
     </AppShell>
   );

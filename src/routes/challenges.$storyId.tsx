@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { useState, useRef } from "react";
+import { CheckCircle2, XCircle, Target } from "lucide-react";
 import { AppShell } from "@/components/bizcraft/app-shell";
 import { ProgressBar } from "@/components/bizcraft/ui-bits";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,12 @@ function QuizPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [xp, setXp] = useState(0);
 
+  // ── BUG FIX: store correctness in a ref so it's stable during animation ──
+  // isCorrect derived from state can be stale between renders during the
+  // "shooting" phase. Using a ref guarantees the animation class applied to
+  // the ball matches the answer that was actually chosen.
+  const isCorrectRef = useRef(false);
+
   if (!story || questions.length === 0) {
     return (
       <AppShell role="student" title="Challenge unavailable">
@@ -58,14 +64,21 @@ function QuizPage() {
 
   const question = questions[Math.min(index, questions.length - 1)]!;
   const score = answers.filter((a) => a.is_correct).length;
-  const isCorrect = selected === question.correct_choice_id;
+
+  // Use the ref value during animation phases; derive from state only for feedback display
+  const isCorrect = isCorrectRef.current;
   const shotIndex = question.choices.findIndex((c) => c.id === selected);
 
   const shoot = (choiceId: string) => {
     if (phase !== "answering") return;
+
+    // ── FIX: compute and persist correctness immediately ──
+    const correct = choiceId === question.correct_choice_id;
+    isCorrectRef.current = correct;
+
     setSelected(choiceId);
     setPhase("shooting");
-    const correct = choiceId === question.correct_choice_id;
+
     window.setTimeout(() => {
       setAnswers((prev) => [
         ...prev,
@@ -80,16 +93,19 @@ function QuizPage() {
     if (index + 1 < questions.length) {
       setIndex((i) => i + 1);
       setSelected(null);
+      isCorrectRef.current = false;
       setPhase("answering");
       return;
     }
+    // Last question — submit and go to results
     submitQuiz(storyId, answers);
     navigate({ to: "/results/$storyId", params: { storyId } });
   };
 
   const shooting = phase === "shooting" || phase === "feedback";
-  // Horizontal offset so each answer "ball" travels from its own spot.
+  // Offset the ball so it appears to come from the chosen answer column
   const offsetX = shotIndex >= 0 ? (1.5 - shotIndex) * 26 : 0;
+  const progressPct = (index / questions.length) * 100;
 
   return (
     <AppShell
@@ -98,31 +114,46 @@ function QuizPage() {
       subtitle={`${story.name} · ${story.business_name}`}
     >
       <div className="space-y-4">
-        {/* Scoreboard */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-xl border border-border bg-card p-3 text-center shadow-card">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Question</p>
-            <p className="font-display text-lg font-semibold">
-              {index + 1} of {questions.length}
-            </p>
-          </div>
-          <div className="rounded-xl border border-border bg-card p-3 text-center shadow-card">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Score</p>
-            <p className="font-display text-lg font-semibold text-primary">
-              {score} / {questions.length}
-            </p>
-          </div>
-          <div className="rounded-xl border border-border bg-card p-3 text-center shadow-card">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">XP Earned</p>
-            <p className="font-display text-lg font-semibold text-orange">{xp}</p>
-          </div>
-          <div className="flex flex-col justify-center rounded-xl border border-border bg-card p-3 shadow-card">
-            <p className="mb-2 text-xs uppercase tracking-wide text-muted-foreground">Progress</p>
-            <ProgressBar value={(index / questions.length) * 100} />
+
+        {/* ── Hero strip with scoreboard ───────────────────────── */}
+        <div className="relative overflow-hidden rounded-2xl bg-primary px-5 py-5 sm:px-8 shadow-card">
+          <span className="pointer-events-none absolute -right-8 -top-8 size-40 rounded-full bg-white/5" />
+          <span className="pointer-events-none absolute -bottom-8 right-16 size-24 rounded-full bg-white/5" />
+
+          <div className="relative z-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {/* Question */}
+            <div className="rounded-xl bg-white/10 p-3 text-center">
+              <p className="text-xs font-medium uppercase tracking-wide text-white/60">Question</p>
+              <p className="font-display text-lg font-bold text-white">
+                {index + 1} <span className="text-sm font-normal text-white/60">of {questions.length}</span>
+              </p>
+            </div>
+            {/* Score */}
+            <div className="rounded-xl bg-white/10 p-3 text-center">
+              <p className="text-xs font-medium uppercase tracking-wide text-white/60">Score</p>
+              <p className="font-display text-lg font-bold text-white">
+                {score} <span className="text-sm font-normal text-white/60">/ {questions.length}</span>
+              </p>
+            </div>
+            {/* XP */}
+            <div className="rounded-xl bg-white/10 p-3 text-center">
+              <p className="text-xs font-medium uppercase tracking-wide text-white/60">XP Earned</p>
+              <p className="font-display text-lg font-bold text-orange">{xp}</p>
+            </div>
+            {/* Progress */}
+            <div className="flex flex-col justify-center rounded-xl bg-white/10 p-3">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wide text-white/60">Progress</p>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-white/20">
+                <div
+                  className="h-full rounded-full bg-orange transition-all duration-500"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Question */}
+        {/* ── Question card ─────────────────────────────────────── */}
         <div className="rounded-xl border border-border bg-card p-5 shadow-card">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
             Question {index + 1}
@@ -132,15 +163,15 @@ function QuizPage() {
           </h2>
         </div>
 
-        {/* Court */}
+        {/* ── Basketball court ──────────────────────────────────── */}
         <div className="relative h-72 overflow-hidden rounded-xl border border-border bc-court shadow-card sm:h-80">
-          {/* court markings */}
+          {/* Court markings */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute left-1/2 top-0 h-40 w-64 -translate-x-1/2 rounded-b-[8rem] border-2 border-t-0 border-court-line sm:w-80" />
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-court-line" />
           </div>
 
-          {/* backboard + hoop */}
+          {/* Backboard + hoop */}
           <div className="absolute left-1/2 top-6 -translate-x-1/2 text-center">
             <div className="mx-auto h-16 w-28 rounded-md border-4 border-foreground/70 bg-surface/80 sm:w-32" />
             <div
@@ -157,9 +188,9 @@ function QuizPage() {
             />
           </div>
 
-          {/* ball */}
+          {/* Ball — key changes only when a new shot is taken, locking the animation class */}
           <div
-            key={`${question.id}-${phase}`}
+            key={`${question.id}-${selected ?? "idle"}`}
             className={cn(
               "absolute bottom-6 left-1/2 -ml-6 size-12 rounded-full border-2 border-orange-foreground/20 bg-orange shadow-card",
               shooting && (isCorrect ? "bc-ball-made" : "bc-ball-miss"),
@@ -176,24 +207,24 @@ function QuizPage() {
             <span className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-orange-foreground/30" />
           </div>
 
-          {/* result banner */}
+          {/* Result banner inside court */}
           {phase === "feedback" && (
             <div className="absolute inset-x-0 bottom-4 flex justify-center">
               <span
                 className={cn(
-                  "rounded-full px-4 py-1.5 font-display text-sm font-semibold shadow-card",
+                  "rounded-full px-5 py-1.5 font-display text-sm font-semibold shadow-card",
                   isCorrect
                     ? "bg-success text-success-foreground"
                     : "bg-destructive text-destructive-foreground",
                 )}
               >
-                {isCorrect ? `Correct! +${XP_RULES.correct_answer} XP` : "Incorrect — missed shot"}
+                {isCorrect ? `🏀 Swish! +${XP_RULES.correct_answer} XP` : "❌ Missed shot!"}
               </span>
             </div>
           )}
         </div>
 
-        {/* Answers */}
+        {/* ── Answer choices ────────────────────────────────────── */}
         <div className="grid gap-3 sm:grid-cols-2">
           {question.choices.map((choice) => {
             const chosen = selected === choice.id;
@@ -207,7 +238,8 @@ function QuizPage() {
                 onClick={() => shoot(choice.id)}
                 className={cn(
                   "flex items-center gap-3 rounded-xl border bg-card p-4 text-left text-sm transition-colors disabled:cursor-not-allowed",
-                  "border-border hover:border-primary hover:bg-primary-soft",
+                  phase === "answering" && "hover:border-primary hover:bg-primary-soft",
+                  !revealCorrect && !revealWrong && "border-border",
                   revealCorrect && "border-success bg-success-soft",
                   revealWrong && "border-destructive bg-destructive/10",
                 )}
@@ -222,30 +254,39 @@ function QuizPage() {
                   {choice.label}
                 </span>
                 <span className="flex-1">{choice.text}</span>
-                {revealCorrect && <CheckCircle2 className="size-5 text-success" />}
-                {revealWrong && <XCircle className="size-5 text-destructive" />}
+                {revealCorrect && <CheckCircle2 className="size-5 shrink-0 text-success" />}
+                {revealWrong && <XCircle className="size-5 shrink-0 text-destructive" />}
               </button>
             );
           })}
         </div>
 
+        {/* ── Feedback / explanation card ───────────────────────── */}
         {phase === "feedback" && (
-          <div className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <div className={cn(
+            "rounded-xl border p-5 shadow-card",
+            isCorrect ? "border-success/30 bg-success-soft" : "border-destructive/30 bg-destructive/5",
+          )}>
             <p className="font-display text-sm font-semibold">
-              {isCorrect ? "Nice shot!" : "Here's the correct answer"}
+              {isCorrect ? "🎉 Nice shot! Keep it up!" : "📖 Here's the correct answer"}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">{question.explanation}</p>
-            <Button className="mt-4 w-full sm:w-auto" onClick={next}>
-              {index + 1 < questions.length ? "Next Question" : "Finish Challenge"}
+            <Button
+              className={cn("mt-4 w-full sm:w-auto", isCorrect ? "" : "bg-primary")}
+              onClick={next}
+            >
+              {index + 1 < questions.length ? "Next Question →" : "Finish Challenge 🏆"}
             </Button>
           </div>
         )}
 
+        {/* ── Prompt ───────────────────────────────────────────── */}
         {phase === "answering" && (
           <p className="text-center text-sm text-muted-foreground">
             Choose an answer to take your shot.
           </p>
         )}
+
       </div>
     </AppShell>
   );
