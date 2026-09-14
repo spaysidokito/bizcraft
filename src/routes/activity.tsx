@@ -23,7 +23,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/activity")({
   head: () => ({
     meta: [
-      { title: "Business Challenge — BizCraft" },
+      { title: "Entrepreneur Mode — BizCraft" },
       { name: "description", content: "Build a business by making smart decisions." },
     ],
   }),
@@ -111,18 +111,30 @@ function totalScore(scores: Scores) {
 
 function ActivityPage() {
   const { currentUser, db, awardXp, awardBadge } = useBizCraft();
-  const scenarios = useMemo(() => {
-    const source = (db.activity_scenarios?.length ? db.activity_scenarios : DEFAULT_ACTIVITY_SCENARIOS) as ActivityScenario[];
-    return source.filter((scenario) => scenario.type === "mc" && scenario.choices?.length).slice(0, 3);
-  }, [db.activity_scenarios]);
-
+  
   const [stage, setStage] = useState(0);
   const [business, setBusiness] = useState<string | null>(null);
   const [capital, setCapital] = useState<string | null>(null);
   const [decisions, setDecisions] = useState<string[]>([]);
   const [reflection, setReflection] = useState("");
+  const [reflectionSubmitted, setReflectionSubmitted] = useState(false);
   const [view, setView] = useState<"play" | "result">("play");
   const [awarded, setAwarded] = useState(false);
+  
+  // Randomize and filter scenarios based on business type
+  const scenarios = useMemo(() => {
+    const source = (db.activity_scenarios?.length ? db.activity_scenarios : DEFAULT_ACTIVITY_SCENARIOS) as ActivityScenario[];
+    const validScenarios = source.filter((scenario) => scenario.type === "mc" && scenario.choices?.length);
+    
+    // Filter by business type if selected, otherwise use universal scenarios
+    const filtered = business
+      ? validScenarios.filter(s => !s.keywords || s.keywords.length === 0 || s.keywords.includes(business))
+      : validScenarios.filter(s => !s.keywords || s.keywords.length === 0);
+    
+    // Shuffle and pick 3 random scenarios
+    const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 3);
+  }, [db.activity_scenarios, business]);
 
   const scores = useMemo(() => {
     let next = { ...emptyScores };
@@ -138,7 +150,7 @@ function ActivityPage() {
 
   if (!currentUser) {
     return (
-      <AppShell role="student" title="Business Challenge">
+      <AppShell role="student" title="Entrepreneur Mode">
         <div className="rounded-2xl border border-border bg-card p-6">Please sign in to try the activity.</div>
       </AppShell>
     );
@@ -180,6 +192,7 @@ function ActivityPage() {
     setCapital(null);
     setDecisions([]);
     setReflection("");
+    setReflectionSubmitted(false);
     setView("play");
     setAwarded(false);
   };
@@ -190,7 +203,7 @@ function ActivityPage() {
   const growth = Math.min(99, 42 + scores.growth * 5);
 
   return (
-    <AppShell role="student" title="Business Challenge" subtitle="Make decisions and watch your business score grow">
+    <AppShell role="student" title="Entrepreneur Mode" subtitle="Make decisions and watch your business score grow">
       <div className="mx-auto max-w-5xl space-y-5">
         <div className="flex items-center justify-between gap-4 overflow-x-auto rounded-2xl border border-border bg-card px-4 py-3 shadow-card">
           {stages.map((label, index) => {
@@ -304,8 +317,24 @@ function ActivityPage() {
                       value={reflection}
                       onChange={(event) => setReflection(event.target.value)}
                       placeholder="Share your biggest lesson..."
-                      className="mt-3 min-h-24 w-full resize-none rounded-xl border border-border bg-background p-3 text-sm outline-none focus:ring-2 focus:ring-primary"
+                      disabled={reflectionSubmitted}
+                      className="mt-3 min-h-24 w-full resize-none rounded-xl border border-border bg-background p-3 text-sm outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted"
                     />
+                    <Button 
+                      onClick={() => {
+                        if (reflection.trim()) {
+                          setReflectionSubmitted(true);
+                          toast.success("Reflection saved! Great insights.");
+                        } else {
+                          toast.error("Please write your reflection first.");
+                        }
+                      }}
+                      className="mt-3 gap-2"
+                      disabled={!reflection.trim() || reflectionSubmitted}
+                    >
+                      <Check className="size-4" />
+                      {reflectionSubmitted ? "Submitted" : "Submit Reflection"}
+                    </Button>
                   </div>
 
                   <div>

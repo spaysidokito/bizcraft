@@ -9,6 +9,7 @@ import {
   Medal,
   Menu,
   Settings2,
+  Sparkles,
   Target,
   User as UserIcon,
   Users,
@@ -16,7 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useBizCraft } from "@/lib/bizcraft/store";
-import { levelForXp } from "@/lib/bizcraft/data";
+import { levelForXp, levelProgress } from "@/lib/bizcraft/data";
 import { Button } from "@/components/ui/button";
 
 const logoSrc = "/bizcraftlogo.png";
@@ -42,22 +43,23 @@ export function BizCraftLogo({
 }
 
 const studentNav = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/stories", label: "Entrepreneurship Hub", icon: BookOpen },
-  { to: "/challenges", label: "Challenges", icon: Target },
-  { to: "/achievements", label: "Achievements", icon: Medal },
-  { to: "/profile", label: "Profile", icon: UserIcon },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, group: "Learn" },
+  { to: "/stories", label: "Entrepreneurship Hub", icon: BookOpen, group: "Learn" },
+  { to: "/activity", label: "Entrepreneur Mode", icon: Sparkles, group: "Learn" },
+  { to: "/challenges", label: "Challenges", icon: Target, group: "Learn" },
+  { to: "/achievements", label: "Achievements", icon: Medal, group: "Progress" },
+  { to: "/profile", label: "Profile", icon: UserIcon, group: "Progress" },
 ] as const;
 
 const adminNav = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/students", label: "Students", icon: Users },
-  { to: "/admin/stories", label: "Entrepreneur Stories", icon: BookOpen },
-  { to: "/admin/questions", label: "Quiz Questions", icon: ClipboardList },
-  { to: "/admin/badges", label: "Badges", icon: Award },
-  { to: "/admin/reports", label: "Reports", icon: Medal },
-  { to: "/admin/activity-settings", label: "Activity Settings", icon: Settings2 },
-  { to: "/admin/profile", label: "Profile", icon: UserIcon },
+  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, group: "Overview" },
+  { to: "/admin/students", label: "Students", icon: Users, group: "Overview" },
+  { to: "/admin/stories", label: "Entrepreneur Stories", icon: BookOpen, group: "Content" },
+  { to: "/admin/questions", label: "Quiz Questions", icon: ClipboardList, group: "Content" },
+  { to: "/admin/badges", label: "Badges", icon: Award, group: "Content" },
+  { to: "/admin/reports", label: "Reports", icon: Medal, group: "Classroom" },
+  { to: "/admin/activity-settings", label: "Activity Settings", icon: Settings2, group: "Classroom" },
+  { to: "/admin/profile", label: "Profile", icon: UserIcon, group: "Classroom" },
 ] as const;
 
 interface AppShellProps {

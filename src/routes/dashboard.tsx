@@ -69,7 +69,7 @@ function DashboardPage() {
     },
     {
       to: "/activity" as const,
-      label: "Activity",
+      label: "Entrepreneur Mode",
       sub: "Practice real business decisions",
       Icon: Target,
       iconCls: "bg-success-soft text-success",

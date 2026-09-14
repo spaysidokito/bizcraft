@@ -63,14 +63,17 @@ export const DEFAULT_ACTIVITY_SETTINGS: ActivitySettings = {
   autoAdvance: true,
 };
 
-export const ACTIVITY_SCENARIOS_VERSION = 2;
+export const ACTIVITY_SCENARIOS_VERSION = 3;
 const ACTIVITY_SCENARIOS_VERSION_KEY = "bizcraft.activity_scenarios.version";
 
+// Business-specific scenarios organized by business type
 export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
+  // ===== FOOD & BEVERAGE SCENARIOS =====
   {
     id: "s1",
     prompt: "Your supplier delivers late and you risk losing customers. What do you do?",
     type: "mc",
+    keywords: ["food", "fashion", "beauty", "home"],
     choices: [
       { id: "c1", label: "Find an alternate supplier quickly", points: 3 },
       { id: "c2", label: "Contact supplier and negotiate faster delivery", points: 2 },
@@ -378,6 +381,206 @@ export const DEFAULT_ACTIVITY_SCENARIOS: ActivityScenario[] = [
     ],
     bestChoiceId: "c1",
     explanation: "Send a personalized offer or check-in message — proactive outreach often revives dormant customers.",
+  },
+  // ===== FOOD & BEVERAGE SPECIFIC =====
+  {
+    id: "food-1",
+    prompt: "Your restaurant's main ingredient supplier delivers spoiled produce. What do you do?",
+    type: "mc",
+    keywords: ["food"],
+    choices: [
+      { id: "c1", label: "Find an emergency supplier and inform customers of limited menu", points: 3 },
+      { id: "c2", label: "Use the produce anyway to avoid waste", points: 0 },
+      { id: "c3", label: "Close for the day and wait for next delivery", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Find an emergency supplier — protects food safety and maintains customer trust.",
+  },
+  {
+    id: "food-2",
+    prompt: "Your most popular dish has high food costs. What's your best move?",
+    type: "mc",
+    keywords: ["food"],
+    choices: [
+      { id: "c1", label: "Analyze portion sizes and ingredient substitutions without compromising quality", points: 3 },
+      { id: "c2", label: "Remove it from the menu", points: 0 },
+      { id: "c3", label: "Keep it exactly as is and raise the price significantly", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Analyze and optimize — protects profitability while keeping customers happy.",
+  },
+  {
+    id: "food-3",
+    prompt: "It's lunch rush and your cashier calls in sick. What do you do?",
+    type: "mc",
+    keywords: ["food"],
+    choices: [
+      { id: "c1", label: "Jump in yourself or cross-train another staff member", points: 3 },
+      { id: "c2", label: "Close the register and only accept online orders", points: 1 },
+      { id: "c3", label: "Operate short-staffed and let customers wait longer", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Jump in or cross-train — keeps service running and shows leadership.",
+  },
+  // ===== FASHION/CLOTHING SPECIFIC =====
+  {
+    id: "fashion-1",
+    prompt: "Your new clothing line isn't selling as expected. What's your next move?",
+    type: "mc",
+    keywords: ["fashion"],
+    choices: [
+      { id: "c1", label: "Survey customers and adjust designs based on feedback", points: 3 },
+      { id: "c2", label: "Slash prices immediately to clear inventory", points: 1 },
+      { id: "c3", label: "Keep promoting the same way and wait for sales", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Survey and adjust — understand customer needs before discounting.",
+  },
+  {
+    id: "fashion-2",
+    prompt: "A fashion trend suddenly goes viral. How do you respond?",
+    type: "mc",
+    keywords: ["fashion"],
+    choices: [
+      { id: "c1", label: "Quickly source trending items while maintaining quality standards", points: 3 },
+      { id: "c2", label: "Ignore trends and stick to your existing inventory", points: 1 },
+      { id: "c3", label: "Rush order cheap versions to maximize profit", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Source quality trending items — captures demand without sacrificing brand reputation.",
+  },
+  {
+    id: "fashion-3",
+    prompt: "A customer wants to return an item they wore and posted on social media. What do you do?",
+    type: "mc",
+    keywords: ["fashion"],
+    choices: [
+      { id: "c1", label: "Politely decline based on your return policy and explain why", points: 3 },
+      { id: "c2", label: "Accept it to avoid negative reviews", points: 1 },
+      { id: "c3", label: "Accept it but charge a restocking fee", points: 2 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Decline politely — maintains fair policies and prevents return abuse.",
+  },
+  // ===== TECH & APPS SPECIFIC =====
+  {
+    id: "tech-1",
+    prompt: "Your app crashes during peak usage. What's your immediate priority?",
+    type: "mc",
+    keywords: ["tech"],
+    choices: [
+      { id: "c1", label: "Deploy emergency fix and communicate with users about the issue", points: 3 },
+      { id: "c2", label: "Wait until business hours to address it", points: 0 },
+      { id: "c3", label: "Take the app offline without notice", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Fix and communicate — minimizes user frustration and shows accountability.",
+  },
+  {
+    id: "tech-2",
+    prompt: "Users request a major new feature. How do you decide whether to build it?",
+    type: "mc",
+    keywords: ["tech"],
+    choices: [
+      { id: "c1", label: "Validate demand, estimate development cost, and prioritize against roadmap", points: 3 },
+      { id: "c2", label: "Build it immediately to satisfy users", points: 1 },
+      { id: "c3", label: "Ignore feature requests and stick to your original vision", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Validate and prioritize — ensures resources go to high-impact features.",
+  },
+  {
+    id: "tech-3",
+    prompt: "Your app has a data security vulnerability. What do you do?",
+    type: "mc",
+    keywords: ["tech"],
+    choices: [
+      { id: "c1", label: "Fix immediately, audit the system, and notify affected users if needed", points: 3 },
+      { id: "c2", label: "Fix it quietly without telling anyone", points: 1 },
+      { id: "c3", label: "Wait to see if anyone exploits it first", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Fix, audit, and notify — protects users and maintains trust.",
+  },
+  // ===== BEAUTY & CARE SPECIFIC =====
+  {
+    id: "beauty-1",
+    prompt: "A client has an allergic reaction to a product. What's your immediate action?",
+    type: "mc",
+    keywords: ["beauty"],
+    choices: [
+      { id: "c1", label: "Help them immediately, document the incident, and review product ingredients", points: 3 },
+      { id: "c2", label: "Blame the client's sensitive skin", points: 0 },
+      { id: "c3", label: "Offer a refund only", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Help and document — client safety and prevention come first.",
+  },
+  {
+    id: "beauty-2",
+    prompt: "Your salon is fully booked but a regular client needs an emergency appointment. What do you do?",
+    type: "mc",
+    keywords: ["beauty"],
+    choices: [
+      { id: "c1", label: "Offer an early or late slot, or refer to a trusted colleague", points: 3 },
+      { id: "c2", label: "Bump another client without notice", points: 0 },
+      { id: "c3", label: "Tell them you're too busy", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Offer alternatives — balances loyalty without disrespecting other clients.",
+  },
+  {
+    id: "beauty-3",
+    prompt: "A new beauty trend is gaining popularity. How do you respond?",
+    type: "mc",
+    keywords: ["beauty"],
+    choices: [
+      { id: "c1", label: "Get trained on the technique and add it to your services", points: 3 },
+      { id: "c2", label: "Offer it without proper training to capture demand", points: 0 },
+      { id: "c3", label: "Ignore trends and stick to traditional services only", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Train first — ensures quality and safety while meeting customer demand.",
+  },
+  // ===== HOME & LOCAL SERVICES SPECIFIC =====
+  {
+    id: "home-1",
+    prompt: "A client claims your cleaning service damaged their furniture. What's your response?",
+    type: "mc",
+    keywords: ["home"],
+    choices: [
+      { id: "c1", label: "Investigate immediately, document findings, and resolve fairly", points: 3 },
+      { id: "c2", label: "Deny responsibility without investigating", points: 0 },
+      { id: "c3", label: "Offer a small discount on next service", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Investigate and resolve fairly — protects reputation and maintains trust.",
+  },
+  {
+    id: "home-2",
+    prompt: "You're booked solid but need to expand. What's your best strategy?",
+    type: "mc",
+    keywords: ["home"],
+    choices: [
+      { id: "c1", label: "Hire and train reliable team members gradually", points: 3 },
+      { id: "c2", label: "Hire many people quickly without vetting", points: 0 },
+      { id: "c3", label: "Turn away new clients to maintain current workload", points: 1 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Hire and train gradually — maintains service quality while growing.",
+  },
+  {
+    id: "home-3",
+    prompt: "Winter is slow season for your landscaping business. What's your best move?",
+    type: "mc",
+    keywords: ["home"],
+    choices: [
+      { id: "c1", label: "Offer winter services like snow removal or holiday lighting", points: 3 },
+      { id: "c2", label: "Close down and reopen in spring", points: 1 },
+      { id: "c3", label: "Keep promoting summer services despite the season", points: 0 },
+    ],
+    bestChoiceId: "c1",
+    explanation: "Offer seasonal services — diversifies revenue and keeps business active year-round.",
   },
 ];
 
